@@ -1,10 +1,13 @@
 import React from "react";
-import { Header } from "./components/index.js";
+import { Header, Hero, Search, Whatsapp } from "./components/index.js";
 
 const App = () => {
   return (
-    <div className="">
+    <div className="main-container">
       <Header />
+      <Search />
+      <Hero />
+      <Whatsapp />
     </div>
   );
 };

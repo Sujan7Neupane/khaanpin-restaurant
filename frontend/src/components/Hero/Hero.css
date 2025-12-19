@@ -1,0 +1,79 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid #000;
+}
+
+.grid-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.grid-item:hover img {
+  transform: scale(1.05); /* slight zoom on hover */
+}
+
+/* Overlay with description and button */
+.overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: var(--secondary);
+}
+
+.overlay p {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.overlay button {
+  padding: 6px 12px;
+  background-color: var(--primary);
+  color: var(--secondary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.overlay button:hover {
+  background-color: var(--primary);
+}
+
+/* Left large image spans two rows */
+.grid-item.large {
+  grid-row: span 2;
+}
+
+/* Right small images */
+.grid-item.small {
+  height: 100%;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .grid-item.large {
+    grid-row: auto;
+  }
+}

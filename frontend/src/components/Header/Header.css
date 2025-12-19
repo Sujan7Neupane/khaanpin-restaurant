@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background: gray;
+  background: var(--secondary);
   color: var(--secondary);
   font-size: 14px;
   flex-wrap: wrap;
@@ -18,6 +18,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  color: #686868;
 }
 
 .icon,
@@ -35,12 +36,13 @@
   position: absolute;
   top: -5px;
   right: -10px;
-  background: var(--secondary);
-  color: var(--primary);
+  background: var(--primary);
+  color: var(--secondary) !important;
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 10px;
   font-weight: bold;
+  border: 1px solid var(--primary);
 }
 
 /* top navbar */
@@ -51,18 +53,23 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 2rem;
+  width: 100%;
   background-color: var(--primary);
-  box-shadow: 0 2px 5px gray;
-  /* background-image:  */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  position: fixed;
-  top: 41px;
+  position: sticky;
+  top: 0;
   left: 0;
-  width: 100%;
   z-index: 1000;
+
+  transition: all 0.3s ease;
+}
+
+.navbar.sticky {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .logo img {
@@ -159,6 +166,10 @@
     gap: 8px;
   }
 
+  .navbar {
+    padding: 8px 1rem;
+  }
+
   .left-info span,
   .right-cart span {
     margin-right: 10px;
@@ -203,7 +214,7 @@
     opacity: 1;
     pointer-events: auto;
 
-    background-image: url("../src/frontend_assets/pattern_bg.png");
+    background-image: url("../../assets/frontend_assets/pattern_bg.png");
 
     background-size: cover;
     background-position: center;
@@ -211,7 +222,7 @@
   }
 
   .nav-menu li {
-    margin: 15px 0;
+    margin: 10px 0;
     text-align: center;
   }
 

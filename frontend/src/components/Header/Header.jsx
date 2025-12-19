@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import "../Header/Header.css";
 
 const Header = () => {
-  //   console.log(assets.logo);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const hamburgerRef = useRef(null);
+
+  // navbar mathi tasauna
+  const [isSticky, setIsSticky] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -15,7 +18,12 @@ const Header = () => {
   // for clicking outside of the menu it closes
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(e.target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -23,6 +31,7 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   return (
     <div>
       {/* top navbar */}
@@ -56,14 +65,14 @@ const Header = () => {
 
       {/* main navbar */}
       <nav
-        className="navbar"
+        className={`navbar ${isSticky ? "sticky" : ""}`}
         style={{ backgroundImage: `url(${assets.pattern_bg})` }}
       >
         <div className="logo">
           <img src={assets.logo} alt="Logo" />
         </div>
 
-        <ul className={`nav-menu ${isOpen ? "open" : ""}`}>
+        <ul ref={menuRef} className={`nav-menu ${isOpen ? "open" : ""}`}>
           <li>
             <Link to={"#"}>Home</Link>
           </li>
@@ -89,7 +98,7 @@ const Header = () => {
           {/* signup */}
 
           {/* Hamburger icon */}
-          <div className="hamburger" onClick={toggleMenu}>
+          <div ref={hamburgerRef} className="hamburger" onClick={toggleMenu}>
             <img src={isOpen ? assets.close_icon : assets.harburger_icon} />
           </div>
         </div>
