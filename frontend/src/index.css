@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --primary: #ed2027;
+  --secondary: #f5f5f5;
+  --orange: #ed2027;
+  --hover: #18324d;
+  --primary-gradient: linear-gradient(90deg, #ed2027, #ff4b2b);
+  --shadow: 0px 23px 21px -8px rgba(136);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}

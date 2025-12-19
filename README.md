@@ -27,7 +27,7 @@ JavaScript / TypeScript
 
 Axios
 
-Tailwind CSS / CSS (depending on implementation)
+Tailwind CSS / CSS
 
 **Backend**
 
