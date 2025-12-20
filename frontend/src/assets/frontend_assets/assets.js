@@ -10,6 +10,7 @@ import location_icon from "./location.svg";
 import cart_icon from "./cart.svg";
 import profile_circle from "./profile-circle.svg";
 import whatsapp_icon from "./whatsapp.svg";
+import pizza_img from "./pizza.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -43,6 +44,7 @@ export const assets = {
   profile_circle,
   close_icon,
   whatsapp_icon,
+  pizza_img,
 
   rating_starts,
   add_icon_green,

@@ -1,13 +1,14 @@
 import React from "react";
 import "../Hero/Hero.css";
+import { assets } from "../../assets/frontend_assets/assets";
 
 const Hero = () => {
   return (
-    <div>
+    <div className="standard-padding container">
       <div className="grid-container">
         {/* Left large image */}
         <div className="grid-item large">
-          <img src="/path/to/image1.jpg" alt="Large" />
+          <img src={assets.pizza_img} alt="Large" />
           <div className="overlay">
             <p>Short description for large image</p>
             <button>Learn More</button>
@@ -16,18 +17,20 @@ const Hero = () => {
 
         {/* Right top image */}
         <div className="grid-item small">
-          <img src="/path/to/image2.jpg" alt="Top Right" />
+          <img src={assets.pizza_img} alt="Top Right" />
           <div className="overlay">
-            <p>Short description for top right image</p>
+            <p className="smallpara">Short description for top right image</p>
             <button>Learn More</button>
           </div>
         </div>
 
         {/* Right bottom image */}
         <div className="grid-item small">
-          <img src="/path/to/image3.jpg" alt="Bottom Right" />
+          <img src={assets.pizza_img} alt="Bottom Right" />
           <div className="overlay">
-            <p>Short description for bottom right image</p>
+            <p className="smallpara">
+              Short description for bottom right image
+            </p>
             <button>Learn More</button>
           </div>
         </div>

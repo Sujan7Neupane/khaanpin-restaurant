@@ -33,7 +33,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {/* top navbar */}
       <div className="top-navbar">
         <div className="left-info">
@@ -103,7 +103,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-    </div>
+    </>
   );
 };
 
