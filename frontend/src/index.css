@@ -7,6 +7,8 @@
   --hover: #18324d;
   --primary-gradient: linear-gradient(90deg, #ed2027, #ff4b2b);
   --shadow: 0px 23px 21px -8px rgba(136);
+  --gray: #424242;
+  --yellow: #ffc107;
 }
 
 /* utility class */
@@ -31,3 +33,29 @@
 }
 
 /* utility class */
+
+@media screen and (max-width: 900px) {
+  .standard-padding {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .menu-header {
+    margin-left: unset;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .standard-padding {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .menu-header {
+    margin-left: unset;
+  }
+
+  .menu-title {
+    margin-left: unset;
+  }
+}

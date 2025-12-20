@@ -112,15 +112,20 @@
   /* Make the two small items two columns */
   .small-grid {
     display: grid;
+    /* 2 columns */
     grid-template-columns: repeat(2, 1fr);
+    /* 1 row */
+    grid-template-rows: 1fr;
     gap: 12px;
   }
 
   .overlay .smallpara {
-    font-size: 12px;
+    font-size: 10px;
   }
 
-  .grid-item.small {
+  /* .overlay button {
+    /* width: 100%; */
+  */ .grid-item.small {
     height: 160px;
   }
 }

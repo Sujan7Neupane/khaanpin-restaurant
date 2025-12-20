@@ -1,0 +1,43 @@
+import React, { useEffect, useState } from "react";
+import "../HomePage/HomePage.css";
+
+import {
+  BottomBar,
+  DishList,
+  Header,
+  Hero,
+  Menu,
+  Search,
+  Whatsapp,
+} from "../../components/index";
+
+const HomePage = () => {
+  const [category, setCategory] = useState("All");
+
+  // for the bottom bar and whatsapp position issue
+  const [showBar, setShowBar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBar(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  // for the bottom bar and whatsapp position issue
+
+  return (
+    <div>
+      <Header />
+      <Search />
+      <Hero />
+      <Whatsapp showBar={showBar} />
+      <BottomBar showBar={showBar} />
+      <Menu category={category} setCategory={setCategory} />
+      <DishList category={category} />
+    </div>
+  );
+};
+
+export default HomePage;

@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="grid-container">
         {/* Left large image */}
         <div className="grid-item large">
-          <img src={assets.pizza_img} alt="Large" />
+          <img src={assets.pizza_img} alt="Large" loading="lazy" />
           <div className="overlay">
             <p>Hot, cheesy, and loaded with flavor in every bite.</p>
             <button>Learn More</button>
@@ -19,7 +19,7 @@ const Hero = () => {
         {/* Small items wrapper */}
         <div className="small-grid">
           <div className="grid-item small">
-            <img src={assets.momo_img} alt="Top Right" />
+            <img src={assets.momo_img} alt="Top Right" loading="lazy" />
             <div className="overlay">
               <p className="smallpara">
                 Delicious momo packed with flavor, perfect bite every time.
@@ -30,7 +30,7 @@ const Hero = () => {
 
           {/* Right bottom image */}
           <div className="grid-item small">
-            <img src={assets.chowmein_img} alt="Bottom Right" />
+            <img src={assets.chowmein_img} alt="Bottom Right" loading="lazy" />
             <div className="overlay">
               <p className="smallpara">
                 Savory noodles loaded with veggies and your choice of protein.

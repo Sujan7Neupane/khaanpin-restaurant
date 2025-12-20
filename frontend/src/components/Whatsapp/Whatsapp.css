@@ -2,20 +2,19 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: #25d366; /* WhatsApp green */
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
+  background: #25d366;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: bottom 0.3s ease;
+  z-index: 998;
 }
 
-.whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+/* Move up when bottom bar appears */
+.whatsapp-float.move-up {
+  bottom: 100px;
 }

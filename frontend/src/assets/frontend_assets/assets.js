@@ -13,6 +13,7 @@ import whatsapp_icon from "./whatsapp.svg";
 import pizza_img from "./pizza.png";
 import momo_img from "./momo.jpg";
 import chowmein_img from "./chowmein.jpg";
+import logo_mini from "./logo-mini.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -49,6 +50,7 @@ export const assets = {
   pizza_img,
   momo_img,
   chowmein_img,
+  logo_mini,
 
   rating_starts,
   add_icon_green,
