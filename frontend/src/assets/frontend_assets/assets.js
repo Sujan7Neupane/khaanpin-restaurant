@@ -11,6 +11,8 @@ import cart_icon from "./cart.svg";
 import profile_circle from "./profile-circle.svg";
 import whatsapp_icon from "./whatsapp.svg";
 import pizza_img from "./pizza.png";
+import momo_img from "./momo.jpg";
+import chowmein_img from "./chowmein.jpg";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -45,6 +47,8 @@ export const assets = {
   close_icon,
   whatsapp_icon,
   pizza_img,
+  momo_img,
+  chowmein_img,
 
   rating_starts,
   add_icon_green,
