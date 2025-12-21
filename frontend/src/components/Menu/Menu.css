@@ -122,16 +122,11 @@
 
   /* title and desc */
   .menu-title {
-    font-size: 22px;
+    font-size: 16px;
   }
 
   .menu-desc {
     font-size: 14px;
-  }
-
-  .menu-header {
-    margin-bottom: 24px;
-    margin-left: 10px;
   }
   /* title and desc */
 }

@@ -4,6 +4,7 @@
   --primary: #ed2027;
   --secondary: #f5f5f5;
   --orange: #ed2027;
+  --gradient: linear-gradient(135deg, #ef4444, #f97316);
   --hover: #18324d;
   --primary-gradient: linear-gradient(90deg, #ed2027, #ff4b2b);
   --shadow: 0px 23px 21px -8px rgba(136);

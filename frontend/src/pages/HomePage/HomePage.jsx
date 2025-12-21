@@ -4,9 +4,9 @@ import "../HomePage/HomePage.css";
 import {
   BottomBar,
   DishList,
-  Header,
   Hero,
   Menu,
+  MobileDownload,
   Search,
   Whatsapp,
 } from "../../components/index";
@@ -29,13 +29,13 @@ const HomePage = () => {
 
   return (
     <div>
-      <Header />
       <Search />
-      <Hero />
+      <Hero showBar={showBar} />
       <Whatsapp showBar={showBar} />
       <BottomBar showBar={showBar} />
       <Menu category={category} setCategory={setCategory} />
       <DishList category={category} />
+      <MobileDownload />
     </div>
   );
 };

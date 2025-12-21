@@ -1,0 +1,244 @@
+.contact-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+}
+
+/* Header */
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 20px 0;
+}
+
+.contact-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.contact-header p {
+  font-size: 15px;
+  color: #666;
+  margin: 0;
+}
+
+/* Grid Layout */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Contact Info */
+.contact-info h2,
+.contact-form-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.contact-info {
+  background: #fafafa;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item .icon {
+  font-size: 1.2rem;
+  width: 36px;
+  height: 36px;
+  background: var(--secondary);
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info-item h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #444;
+}
+
+.info-item p,
+.info-item a {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #666;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.info-item a:hover {
+  color: var(--primary);
+}
+
+/* Contact Form */
+.contact-form-section {
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  margin: 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: var(--secondary);
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+.submit-btn {
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background: var(--primary);
+}
+
+/* FAQ Section */
+.faq-section {
+  margin-top: 40px;
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.faq-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.faq-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.faq-item {
+  padding: 16px;
+  background: var(--secondary);
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.faq-item h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #444;
+}
+
+.faq-item p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #666;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .contact-container {
+    padding: 16px;
+  }
+
+  .contact-header {
+    margin-bottom: 30px;
+  }
+
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+
+  .contact-info,
+  .contact-form-section,
+  .faq-section {
+    padding: 20px;
+  }
+
+  .info-item {
+    margin-bottom: 16px;
+  }
+
+  .faq-list {
+    grid-template-columns: 1fr;
+  }
+}

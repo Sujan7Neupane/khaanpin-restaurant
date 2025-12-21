@@ -6,5 +6,18 @@ import Menu from "./Menu/Menu";
 import DishList from "./DishList/DishList";
 import DishCard from "./DishCard/DishCard";
 import BottomBar from "./BottomBar/BottomBar";
+import MobileDownload from "./MobileDownload/MobileDownload";
+import Footer from "./Footer/Footer";
 
-export { Header, Search, Hero, Whatsapp, Menu, DishList, DishCard, BottomBar };
+export {
+  Header,
+  Search,
+  Hero,
+  Whatsapp,
+  Menu,
+  DishList,
+  DishCard,
+  BottomBar,
+  MobileDownload,
+  Footer,
+};

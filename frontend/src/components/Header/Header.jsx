@@ -1,21 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { assets } from "../../assets/frontend_assets/assets.js";
-import { Link } from "react-router-dom";
+import { assets } from "../../assets/frontend_assets/assets";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../Header/Header.css";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const hamburgerRef = useRef(null);
+  const navigate = useNavigate();
 
-  // navbar mathi tasauna
-  const [isSticky, setIsSticky] = useState(false);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  // for clicking outside of the menu it closes
+  // close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -34,7 +30,7 @@ const Header = () => {
 
   return (
     <>
-      {/* top navbar */}
+      {/* Top Navbar */}
       <div className="top-navbar">
         <div className="left-info">
           <span>
@@ -54,52 +50,45 @@ const Header = () => {
         </div>
 
         <div className="right-cart">
-          <span>
-            <img src={assets.cart_icon} alt="cart" className="icon" />
-            <span className="text">Cart</span>
-          </span>
-
+          <img src={assets.cart_icon} alt="cart" className="icon" />
           <span className="cart-count">3</span>
         </div>
       </div>
 
-      {/* main navbar */}
+      {/* Main Navbar */}
       <nav
-        className={`navbar ${isSticky ? "sticky" : ""}`}
+        className="navbar"
         style={{ backgroundImage: `url(${assets.pattern_bg})` }}
       >
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <img src={assets.logo} alt="Logo" />
         </div>
 
         <ul ref={menuRef} className={`nav-menu ${isOpen ? "open" : ""}`}>
           <li>
-            <Link to={"#"}>Home</Link>
+            <NavLink to="/" end>
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to={"#"}>Products</Link>
+            <NavLink to="/products">Products</NavLink>
           </li>
           <li>
-            <Link to={"#"}>About</Link>
+            <NavLink to="/about">About</NavLink>
           </li>
           <li>
-            <Link to={"#"}>Contact</Link>
+            <NavLink to="/contact">Contact</NavLink>
           </li>
         </ul>
 
         <div className="nav-actions">
-          {/* signup */}
-          <div className="nav-icons">
-            {/* <Link to={"#"}>
-            <img className="icon" src={assets.profile_icon} alt="Profile" />
-          </Link> */}
-            <button className="signup-btn">Sign Up</button>
-          </div>
-          {/* signup */}
+          <button className="signup-btn">Sign Up</button>
 
-          {/* Hamburger icon */}
           <div ref={hamburgerRef} className="hamburger" onClick={toggleMenu}>
-            <img src={isOpen ? assets.close_icon : assets.harburger_icon} />
+            <img
+              src={isOpen ? assets.close_icon : assets.harburger_icon}
+              alt="menu"
+            />
           </div>
         </div>
       </nav>

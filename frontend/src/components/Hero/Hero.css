@@ -120,12 +120,18 @@
   }
 
   .overlay .smallpara {
-    font-size: 10px;
+    font-size: 18px;
   }
 
   /* .overlay button {
     /* width: 100%; */
   */ .grid-item.small {
     height: 160px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .overlay .smallpara {
+    font-size: 10px;
   }
 }

@@ -67,6 +67,15 @@ const dishesList = [
     image: assets.pizza_img,
     category: "Pizza",
   },
+  {
+    id: 8,
+    name: "Veg Momo",
+    desc: "Steamed dumplings stuffed with fresh vegetables.",
+    price: 199,
+    rating: 4.2,
+    image: assets.momo_img,
+    category: "Momo",
+  },
 ];
 
 const DishList = ({ category }) => {
@@ -78,17 +87,21 @@ const DishList = ({ category }) => {
       {/* Column Container */}
       <div className="dish-list">
         {dishesList.map((item, index) => {
-          // display card here
-          return (
-            <DishCard
-              key={index}
-              id={item.id}
-              name={item.name}
-              desc={item.desc}
-              price={item.price}
-              image={item.image}
-            />
-          );
+          // Display food according to the menu
+          if (category === "All" || category === item.category) {
+            return (
+              // display card here
+
+              <DishCard
+                key={index}
+                id={item.id}
+                name={item.name}
+                desc={item.desc}
+                price={item.price}
+                image={item.image}
+              />
+            );
+          }
         })}
       </div>
     </div>

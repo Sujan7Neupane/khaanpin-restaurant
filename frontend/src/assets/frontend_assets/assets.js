@@ -14,15 +14,19 @@ import pizza_img from "./pizza.png";
 import momo_img from "./momo.jpg";
 import chowmein_img from "./chowmein.jpg";
 import logo_mini from "./logo-mini.png";
+import about_img from "./about_img.jpg";
+import team_img from "./team.jpg";
+import fresh_veg from "./fresh-veg.jpg";
+import signature_dish from "./signature_dish.jpg";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
 import remove_icon_red from "./remove_icon_red.png";
 import app_store from "./app_store.png";
 import play_store from "./play_store.png";
-import linkedin_icon from "./linkedin_icon.png";
-import facebook_icon from "./facebook_icon.png";
-import twitter_icon from "./twitter_icon.png";
+import instagram_icon from "./instagram_logo.svg";
+import facebook_icon from "./facebook_icon.svg";
+import twitter_icon from "./twitter_logo.svg";
 import cross_icon from "./cross_icon.png";
 import selector_icon from "./selector_icon.png";
 import rating_starts from "./rating_starts.png";
@@ -51,6 +55,10 @@ export const assets = {
   momo_img,
   chowmein_img,
   logo_mini,
+  about_img,
+  team_img,
+  fresh_veg,
+  signature_dish,
 
   rating_starts,
   add_icon_green,
@@ -58,7 +66,7 @@ export const assets = {
   remove_icon_red,
   app_store,
   play_store,
-  linkedin_icon,
+  instagram_icon,
   facebook_icon,
   twitter_icon,
   cross_icon,

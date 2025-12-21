@@ -5,7 +5,7 @@
 
 .dish-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(274px, 220px));
   gap: 27px;
   padding: 0 20px;
 }
