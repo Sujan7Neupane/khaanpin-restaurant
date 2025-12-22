@@ -1,5 +1,6 @@
 import React from "react";
 import "./Contact.css";
+import { assets } from "../../assets/frontend_assets/assets";
 
 const Contact = () => {
   return (
@@ -17,7 +18,9 @@ const Contact = () => {
           <h2>Get in Touch</h2>
 
           <div className="info-item">
-            <span className="icon">📍</span>
+            <span className="icon">
+              <img src={assets.location_icon1} alt="" />
+            </span>
             <div>
               <h3>Location</h3>
               <p>Kathmandu, Nepal</p>
@@ -25,7 +28,9 @@ const Contact = () => {
           </div>
 
           <div className="info-item">
-            <span className="icon">📞</span>
+            <span className="icon">
+              <img src={assets.phone_calling_icon} alt="" />
+            </span>
             <div>
               <h3>Phone</h3>
               <a href="tel:+9779800000000">+977 980-000-0000</a>
@@ -33,7 +38,9 @@ const Contact = () => {
           </div>
 
           <div className="info-item">
-            <span className="icon">✉️</span>
+            <span className="icon">
+              <img src={assets.email_icon1} alt="" />
+            </span>
             <div>
               <h3>Email</h3>
               <a href="mailto:support@yourrestaurant.com">
@@ -43,7 +50,9 @@ const Contact = () => {
           </div>
 
           <div className="info-item">
-            <span className="icon">⏰</span>
+            <span className="icon">
+              <img src={assets.clock_icon} alt="" />
+            </span>
             <div>
               <h3>Hours</h3>
               <p>Daily 10AM–11PM</p>

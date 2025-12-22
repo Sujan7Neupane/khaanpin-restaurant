@@ -9,6 +9,8 @@ import BottomBar from "./BottomBar/BottomBar";
 import MobileDownload from "./MobileDownload/MobileDownload";
 import Footer from "./Footer/Footer";
 
+import SignUpModal from "./SignUpModal/SignUpModal";
+
 export {
   Header,
   Search,
@@ -20,4 +22,5 @@ export {
   BottomBar,
   MobileDownload,
   Footer,
+  SignUpModal,
 };

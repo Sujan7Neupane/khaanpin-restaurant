@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../Header/Header.css";
 
-const Header = () => {
+const Header = ({ setShowLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const hamburgerRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
@@ -27,6 +28,10 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <>
@@ -82,7 +87,9 @@ const Header = () => {
         </ul>
 
         <div className="nav-actions">
-          <button className="signup-btn">Sign Up</button>
+          <button onClick={() => setShowLogin(true)} className="signup-btn">
+            Sign In
+          </button>
 
           <div ref={hamburgerRef} className="hamburger" onClick={toggleMenu}>
             <img

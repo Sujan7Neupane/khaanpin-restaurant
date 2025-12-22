@@ -51,49 +51,39 @@ const About = () => {
         </div>
       </section>
 
-      {/* Values Section with Image */}
+      {/* Values Section */}
       <section className="about-values">
-        <h2>Our Promise</h2>
-        <div className="about-values-grid">
-          <div className="about-value-card">
-            <span className="about-value-icon">🍅</span>
-            <div>
-              <h3>Fresh & Quality</h3>
+        <div className="about-values-container">
+          <h2>Our Promise</h2>
+          <p className="about-values-subtitle">
+            What drives us every day — from sourcing to serving.
+          </p>
+
+          <div className="about-values-grid">
+            <div className="about-value-card">
+              <div className="about-value-icon">🍅</div>
+              <h3>Fresh Ingredients</h3>
               <p>
-                Partnering with trusted local suppliers. No shortcuts, just
-                honest ingredients.
+                Sourced daily from trusted local suppliers to ensure unmatched
+                quality and taste.
               </p>
             </div>
-          </div>
 
-          <div className="about-value-card">
-            <span className="about-value-icon">👨‍🍳</span>
-            <div>
-              <h3>Expert Craft</h3>
+            <div className="about-value-card">
+              <div className="about-value-icon">👨‍🍳</div>
+              <h3>Crafted by Experts</h3>
               <p>
-                Every dish tells a story, prepared with passion and attention to
-                detail.
+                Every dish is prepared with skill, care, and a passion for
+                perfection.
               </p>
             </div>
-          </div>
 
-          <div className="about-value-card">
-            <span className="about-value-icon">⚡</span>
-            <div>
-              <h3>Fast & Reliable</h3>
+            <div className="about-value-card">
+              <div className="about-value-icon">⚡</div>
+              <h3>Quick & Reliable</h3>
               <p>
-                Food that arrives exactly how it should — hot, fresh, and
-                delicious.
-              </p>
-            </div>
-          </div>
-
-          <div className="about-value-card">
-            <span className="about-value-icon">❤️</span>
-            <div>
-              <h3>Community Focus</h3>
-              <p>
-                Giving back and building relationships with our local community.
+                Fast preparation and delivery without ever compromising
+                freshness.
               </p>
             </div>
           </div>

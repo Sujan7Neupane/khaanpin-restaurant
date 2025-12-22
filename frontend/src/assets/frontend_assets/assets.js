@@ -3,7 +3,7 @@ import logo from "./logo.png";
 import header_img from "./header_img.png";
 import pattern_bg from "./pattern_bg.png";
 import harburger_icon from "./hamburger.svg";
-import email_icon from "./email.svg";
+import email_icon from "./email_icon.svg";
 import call_icon from "./call.svg";
 import search_icon from "./search.svg";
 import location_icon from "./location.svg";
@@ -18,6 +18,10 @@ import about_img from "./about_img.jpg";
 import team_img from "./team.jpg";
 import fresh_veg from "./fresh-veg.jpg";
 import signature_dish from "./signature_dish.jpg";
+import location_icon1 from "./location1.svg";
+import phone_calling_icon from "./phone_calling.svg";
+import email_icon1 from "./email.svg";
+import clock_icon from "./time.svg";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -59,6 +63,10 @@ export const assets = {
   team_img,
   fresh_veg,
   signature_dish,
+  location_icon1,
+  phone_calling_icon,
+  email_icon1,
+  clock_icon,
 
   rating_starts,
   add_icon_green,

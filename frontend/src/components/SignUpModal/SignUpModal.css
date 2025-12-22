@@ -1,0 +1,117 @@
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15000;
+}
+
+.auth-modal {
+  background: var(--secondary);
+  color: var(--text);
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.auth-modal h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-form input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.auth-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  opacity: 0.9;
+}
+
+.auth-switch {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-switch span {
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Small devices (phones) */
+@media (max-width: 480px) {
+  .auth-modal {
+    width: 90%;
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .auth-modal h2 {
+    font-size: 20px;
+  }
+
+  .auth-form input {
+    font-size: 14px;
+    padding: 11px 12px;
+  }
+
+  .auth-btn {
+    font-size: 14px;
+    padding: 11px;
+  }
+
+  .auth-close {
+    font-size: 20px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 768px) {
+  .auth-modal {
+    max-width: 380px;
+  }
+}
+
+@media (max-height: 600px) {
+  .auth-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
