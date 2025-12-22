@@ -1,3 +1,6 @@
+// this includes all the imports from the compoents folder
+// All the components are imported and exported from here
+
 import Header from "./Header/Header";
 import Search from "./SearchBar/Search";
 import Hero from "./Hero/Hero";

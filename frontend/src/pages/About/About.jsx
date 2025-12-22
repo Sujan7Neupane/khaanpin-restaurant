@@ -2,6 +2,14 @@ import React from "react";
 import "../About/About.css";
 import { assets } from "../../assets/frontend_assets/assets";
 
+/**
+ * About Component
+ * ----------------
+ * Displays the "About Us" page, highlighting the brand story, values,
+ * statistics, team, and call-to-action. The page is structured into
+ * multiple sections for clear storytelling and visual appeal.
+ */
+
 const About = () => {
   return (
     <div className="about-main">

@@ -2,6 +2,17 @@ import React from "react";
 import "./Contact.css";
 import { assets } from "../../assets/frontend_assets/assets";
 
+/**
+ * Contact Component
+ * -----------------
+ * Renders the Contact page, including:
+ * - Contact details (location, phone, email, hours)
+ * - A contact form for user inquiries
+ * - A quick FAQ section for common questions
+ *
+ * Designed to be clean, responsive, and user-friendly.
+ */
+
 const Contact = () => {
   return (
     <div className="contact-container">

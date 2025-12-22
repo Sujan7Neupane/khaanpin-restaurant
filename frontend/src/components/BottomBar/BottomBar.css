@@ -17,7 +17,9 @@
   z-index: 999;
 }
 
+/* Show the bottom bar (slide up) */
 .bottom-bar.show {
+  /* Visible position above screen bottom */
   bottom: 20px;
 }
 
@@ -74,6 +76,7 @@
   width: 26px;
 }
 
+/* Cart badge for item count */
 .cart-badge {
   position: absolute;
   top: -6px;

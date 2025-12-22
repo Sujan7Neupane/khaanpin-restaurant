@@ -7,10 +7,16 @@ import { store } from "./store/store.js";
 
 import { HomePage, Cart, PlaceOrder, About, Contact } from "./pages/index.js";
 
+/**
+ * Define application routes
+ * -----------------------------------------------
+ * - Root path "/" renders the App component
+ * - Nested routes render specific pages inside the <Outlet /> of App
+ */
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/", // Root path
+    element: <App />, // App layout containing Header, Footer, etc.
     children: [
       { index: true, element: <HomePage /> },
       { path: "cart", element: <Cart /> },

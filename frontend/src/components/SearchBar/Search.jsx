@@ -2,6 +2,14 @@ import React from "react";
 import "../SearchBar/Search.css";
 
 const Search = () => {
+  /**
+   * Search Component(Top)
+   * --------------
+   * This will appear on the top right of the hompepage
+   * Will slide to the product list on searching the element
+   *
+   */
+
   return (
     <div className="search-bar">
       <input type="text" placeholder="Search..." />

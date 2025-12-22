@@ -3,6 +3,9 @@ import "./DishList.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import DishCard from "../DishCard/DishCard";
 
+// Currently manually made dishList
+// future will make controllers in backend
+
 const dishesList = [
   {
     id: 1,
@@ -91,8 +94,9 @@ const DishList = ({ category }) => {
           if (category === "All" || category === item.category) {
             return (
               // display card here
-
               <DishCard
+                // sending data as a props from here to DishCard Component
+                // which will be received as a parameter teta like const DishCard({yaha})
                 key={index}
                 id={item.id}
                 name={item.name}

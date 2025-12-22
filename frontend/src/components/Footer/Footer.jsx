@@ -1,21 +1,39 @@
-import React from "react";
 import "../Footer/Footer.css";
 import { Link } from "react-router";
 import { assets } from "../../assets/frontend_assets/assets";
+
+/**
+ * Footer Component
+ * ----------------
+ * Displays the website footer with three main sections:
+ * 1. Left: Logo, description, and social media links
+ * 2. Middle: Company navigation links
+ * 3. Right: Contact information
+ *
+ * The footer also includes a bottom copyright section.
+ */
 
 const Footer = () => {
   return (
     <footer
       className="footer"
+      // Optional background pattern
       style={{ backgroundImage: `url(${assets.pattern_bg})` }}
     >
+      {/* TOP FOOTER SECTION
+          Contains logo, company links, and contact info */}
       <div className="footer-top">
-        {/* <!-- Left section: Logo, Description, Social Media --> */}
+        {/* LEFT SECTION: Logo, description, social media */}
         <div className="footer-left">
+          {/* Company logo */}
           <img src={assets.logo} alt="Logo" className="footer-logo" />
+
+          {/* Short description / tagline */}
           <p className="footer-desc">
             We provide the best food delivery service with quality and care.
           </p>
+
+          {/* Social media icons */}
           <div className="footer-social">
             <Link to={"https://facebook.com"} target="_blank">
               <img src={assets.facebook_icon} alt="Facebook" />
@@ -29,7 +47,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* <!-- Middle section: Company Links --> */}
+        {/* MIDDLE SECTION: Company navigation links */}
         <div className="footer-middle">
           <h3>COMPANY</h3>
           <ul>
@@ -48,7 +66,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* <!-- Right section: Get in Touch --> */}
+        {/* RIGHT SECTION: Contact / Get in touch */}
         <div className="footer-right">
           <h3>GET IN TOUCH</h3>
           <p>Email: contact@khaanpin.com</p>
@@ -58,7 +76,7 @@ const Footer = () => {
 
       <hr />
 
-      {/* <!-- Footer bottom: Copyright --> */}
+      {/* BOTTOM FOOTER SECTION Copyright / legal notice */}
       <div className="footer-bottom">
         <p>&copy; Khaanpin 2026. All rights reserved.</p>
       </div>

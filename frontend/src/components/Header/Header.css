@@ -26,6 +26,7 @@
   cursor: pointer;
 }
 
+/* cart count icon */
 .cart-count {
   position: absolute;
   top: -5px;
@@ -38,7 +39,7 @@
   border-radius: 50%;
 }
 
-/* ===== MAIN NAVBAR ===== */
+/* main-navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -112,7 +113,7 @@
   color: #000;
 }
 
-/* ===== HAMBURGER ===== */
+/* hamburger */
 .hamburger {
   display: none;
   width: 30px;
@@ -125,7 +126,7 @@
   height: 100%;
 }
 
-/* ===== RESPONSIVE ===== */
+/* Responsive */
 @media (max-width: 768px) {
   .left-info .text {
     display: none;
