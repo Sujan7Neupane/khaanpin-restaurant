@@ -1,0 +1,182 @@
+/* Order placed page css */
+.order-page {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.order-form {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.order-form h2 {
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
+}
+
+.order-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  position: relative;
+}
+
+.order-form .form-group .order-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.order-form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.order-form input::placeholder {
+  color: #999;
+}
+
+/* Order Summary Styles */
+.order-summary {
+  width: 350px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+}
+
+.order-summary h2 {
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+}
+
+.summary-row.total {
+  border-top: 2px solid #333;
+  border-bottom: none;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 15px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 8px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 25px;
+}
+
+.checkout-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .order-page {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .order-summary {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-page {
+    padding: 20px 15px;
+  }
+
+  .order-form,
+  .order-summary {
+    padding: 15px;
+  }
+
+  .order-form h2,
+  .order-summary h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .order-form form {
+    gap: 15px;
+  }
+
+  .order-form input {
+    padding: 8px;
+    font-size: 15px;
+  }
+
+  .summary-row {
+    font-size: 15px;
+    padding: 10px 0;
+  }
+
+  .summary-row.total {
+    font-size: 18px;
+  }
+
+  .checkout-btn {
+    padding: 8px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .order-form,
+  .order-summary {
+    padding: 10px;
+  }
+
+  .order-form h2,
+  .order-summary h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}

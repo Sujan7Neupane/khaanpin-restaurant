@@ -1,5 +1,8 @@
 import React from "react";
+
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+
 import { removeFromCart } from "../../store/cartSlice";
 import "../Cart/Cart.css";
 import { assets } from "../../assets/frontend_assets/assets";
@@ -17,6 +20,9 @@ import { assets } from "../../assets/frontend_assets/assets";
 const CartPage = () => {
   // useDispatch dispatches/sends the data through payload to store
   const dispatch = useDispatch();
+
+  // for navigation to order page with proceed to checkout button
+  const navigate = useNavigate();
 
   // all the cart Items inside the cart
   const cartItems = useSelector((state) => state.cart.items);
@@ -75,7 +81,7 @@ const CartPage = () => {
         <button
           className="proceed-btn"
           // TODO: connect this button to payment gateway later
-          onClick={() => alert("Proceeding to payment...")}
+          onClick={() => navigate("/order")}
         >
           Proceed to Payment
         </button>
