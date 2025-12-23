@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../Header/Header.css";
+import { useSelector } from "react-redux";
 
 /**
  * Header Component
@@ -28,7 +29,7 @@ const Header = ({ setShowLogin }) => {
   const navigate = useNavigate();
 
   //  Tracks the current route
-  //  Used to automatically close the menu on navigation
+  //  Used to automatically close the menu on navigation on mobie screen
   const location = useLocation();
 
   // Toggles the mobile menu open/close state
@@ -61,6 +62,16 @@ const Header = ({ setShowLogin }) => {
     setIsOpen(false);
   }, [location.pathname]);
 
+  // Get cart items from Redux
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Calculate total quantity (cart number)
+  // TODO: will be handled from backend later
+  let cartCount = 0;
+  for (let item of cartItems) {
+    cartCount += item.quantity;
+  }
+
   return (
     <>
       {/* Top Navbar: Contact and cart information */}
@@ -83,8 +94,15 @@ const Header = ({ setShowLogin }) => {
         </div>
 
         <div className="right-cart">
-          <img src={assets.cart_icon} alt="cart" className="icon" />
-          <span className="cart-count">3</span>
+          <img
+            src={assets.cart_icon}
+            onClick={() => navigate("/cart")}
+            alt="cart"
+            className="icon"
+          />
+
+          {/* Show count only if cart is not empty */}
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </div>
       </div>
 

@@ -1,0 +1,212 @@
+/* Cart Page css */
+
+.cart-page {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.cart-page h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Container for all cart items */
+.cart-items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Individual cart item */
+/* Cart Item container */
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+}
+
+/* Delete icon wrapper */
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top of cart item */
+}
+
+/* Delete icon image */
+.delete-icon {
+  width: 36px; /* Desktop size */
+  height: 36px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.delete-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Product image */
+.cart-item img {
+  width: 100%;
+  max-width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Product info container */
+.cart-info h3 {
+  margin: 0 0 5px;
+  font-size: 1.1rem;
+}
+
+.cart-info p {
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+
+/* Delete icon styling */
+.icon-wrapper img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+/* Total and Proceed button section */
+.total-section {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.proceed-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.proceed-btn:hover {
+  background-color: #218838;
+}
+
+/* Empty cart message */
+.empty-cart {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .cart-item {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .icon-wrapper {
+    grid-column: 2;
+    justify-self: flex-end;
+    margin-top: 5px;
+  }
+
+  .total-section {
+    text-align: center;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .cart-item {
+    display: flex;
+    flex-direction: column; /* Stack image and info */
+    align-items: center;
+    position: relative;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    gap: 10px;
+  }
+
+  /* Product image full width */
+  .cart-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 20px;
+    /* border: 1px solid var(--gray); */
+  }
+
+  /* Floating circular delete icon on top-right */
+  .icon-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 4px;
+  }
+
+  .icon-wrapper img {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Info text below image */
+  .cart-info {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .cart-info h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .cart-info p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Total and Proceed button section */
+  .total-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .proceed-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .cart-page h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}

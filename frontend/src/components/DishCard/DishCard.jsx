@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../DishCard/DishCard.css";
 import { assets } from "../../assets/frontend_assets/assets";
+import { useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../../store/cartSlice";
 
 /**
  * DishCard Component
@@ -21,6 +23,9 @@ const DishCard = ({ id, name, price, desc, image }) => {
   // cart ko number counts
   const [cartCount, setCartCount] = useState(0);
 
+  // Redux dispatch to dispatch/send data using payload
+  const dispatch = useDispatch();
+
   return (
     <div className="dish-item">
       {/* Dish Image and Add/Remove Controls */}
@@ -37,7 +42,18 @@ const DishCard = ({ id, name, price, desc, image }) => {
             className="add-icon"
             src={assets.add_icon_white}
             alt="add"
-            onClick={() => setCartCount(1)}
+            // here id name price image is passed to the store
+            onClick={() => {
+              setCartCount(1);
+              dispatch(
+                addToCart({
+                  id,
+                  name,
+                  price,
+                  image,
+                })
+              );
+            }}
             loading="lazy"
           />
         ) : (
@@ -47,9 +63,13 @@ const DishCard = ({ id, name, price, desc, image }) => {
             <img
               src={assets.remove_icon_red}
               alt="remove"
-              onClick={() => setCartCount((prev) => prev - 1)}
+              onClick={() => {
+                setCartCount((prev) => prev - 1);
+                dispatch(removeFromCart(id));
+              }}
               loading="lazy"
             />
+
             {/* Display current count */}
             <p>{cartCount}</p>
 
@@ -57,7 +77,18 @@ const DishCard = ({ id, name, price, desc, image }) => {
             <img
               src={assets.add_icon_green}
               alt="add"
-              onClick={() => setCartCount((prev) => prev + 1)}
+              // here id name price image is passed to the store
+              onClick={() => {
+                setCartCount((prev) => prev + 1);
+                dispatch(
+                  addToCart({
+                    id,
+                    name,
+                    price,
+                    image,
+                  })
+                );
+              }}
               loading="lazy"
             />
           </div>
@@ -69,6 +100,7 @@ const DishCard = ({ id, name, price, desc, image }) => {
         <div className="dish-item-name-rating">
           {/* Dish name */}
           <p>{name}</p>
+
           {/* Static rating stars */}
           {/* TODO: addition of rating system using backend  */}
           <img src={assets.rating_starts} alt="rating" loading="lazy" />

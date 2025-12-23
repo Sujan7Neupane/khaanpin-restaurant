@@ -18,8 +18,8 @@ This project focuses on clean UI, reusable components, and scalable structure.
 ## Project Structure
 
 src/
-assets/        -> Images, icons, static assets  
-components/    -> Reusable UI components  
+ assets/        -> Images, icons, static assets  
+ components/    -> Reusable UI components  
 pages/         -> Route-level pages  
 store/         -> Redux store configuration  
 App.jsx        -> Main layout component  
