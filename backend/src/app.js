@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-import { userRouter } from "./routes/user.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 app.use("/api/v1/users", userRouter);
 
