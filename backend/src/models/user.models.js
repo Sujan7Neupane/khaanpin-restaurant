@@ -32,24 +32,6 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
 
-    cartData: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        size: {
-          type: String,
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
-
     refreshToken: {
       type: String,
     },

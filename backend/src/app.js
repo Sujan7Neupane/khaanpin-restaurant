@@ -33,7 +33,16 @@ app.get("/", (req, res) => {
 
 // Routes
 import userRouter from "./routes/user.routes.js";
+import menuRouter from "./routes/menu.routes.js";
+import dishRouter from "./routes/dish.route.js";
 
-app.use("/api/v1/users", userRouter);
+// for user login/registration
+app.use("/api/v1/user", userRouter);
+
+// menu lists
+app.use("/api/v1/menu", menuRouter);
+
+// all the dishes
+app.use("/api/v1/dish", dishRouter);
 
 export { app };
