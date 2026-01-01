@@ -6,8 +6,8 @@ import multer from "multer";
 const storage = multer.diskStorage({
   destination: "./public/temp",
   filename: (req, file, cb) => {
-    return cb(null, `${Date.now()} ${file.originalname}`);
+    return cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-export const upload = multer({ storage: storage });
+export const upload = multer({ storage });

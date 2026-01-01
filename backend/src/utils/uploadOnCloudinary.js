@@ -20,10 +20,6 @@ const uploadOnCloudinary = async (localFilePath) => {
       resource_type: "auto",
     });
 
-    if (!response) {
-      console.log("Error while creating file!");
-    }
-
     // local file delete using FileSystem(fs)
     // if not uploaded
     fs.unlinkSync(localFilePath);

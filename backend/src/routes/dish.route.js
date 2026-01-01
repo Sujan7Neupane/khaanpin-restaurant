@@ -1,6 +1,6 @@
 import express from "express";
-import { addDish, dishList } from "../controllers/dish.controller";
-import { upload } from "../middlewares/multer.middlwware";
+import { addDish, dishList } from "../controllers/dish.controller.js";
+import { upload } from "../middlewares/multer.middlwware.js";
 
 const router = express();
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const dishSchema = mongoose.Schema({
+const dishSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
