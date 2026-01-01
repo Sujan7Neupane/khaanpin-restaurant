@@ -41,9 +41,16 @@ const addDish = asyncHandler(async (req, res) => {
   // returning as a response
   return res
     .status(200)
-    .json(new ApiResponse(200, { data: dish }, "Dish Added Successfully!"));
+    .json(new ApiResponse(200, { dish }, "Dish Added Successfully!"));
 });
 
-const dishList = asyncHandler(async (req, res) => {});
+// to display the lists of dishes added
+const dishList = asyncHandler(async (_req, res) => {
+  const dishes = await Dish.find({});
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { dishes }, "Dish List Fetched Successfully!"));
+});
 
 export { dishList, addDish };
