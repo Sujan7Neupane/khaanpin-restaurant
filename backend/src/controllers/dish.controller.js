@@ -3,6 +3,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
+import deleteFromCloudinary from "../utils/deletefromCloudinary.js";
 
 // this adds the new dishes in the dish list
 const addDish = asyncHandler(async (req, res) => {
@@ -53,4 +54,27 @@ const dishList = asyncHandler(async (_req, res) => {
     .json(new ApiResponse(200, { dishes }, "Dish List Fetched Successfully!"));
 });
 
-export { dishList, addDish };
+// to remove the dishes from the list
+const removeDish = asyncHandler(async (req, res) => {
+  // req.body.id gets the id of the dish to delete from the frontend
+  // dish will hold the dish to be deleted
+  // console.log(req.body.id);
+
+  const dish = await Dish.findById(req.body.id);
+
+  // delete the image from Cloudinary if it exists
+  // deleteFromCloudinary is utility function that helps to delete images from cloudinary
+  if (dish.image) {
+    await deleteFromCloudinary(dish.image);
+  }
+
+  // remove the dish from MongoDB
+  await Dish.findByIdAndDelete(req.body.id);
+
+  // return response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Dish removed successfully!"));
+});
+
+export { dishList, addDish, removeDish };
