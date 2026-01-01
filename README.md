@@ -18,7 +18,7 @@ MongoDB database for persistent data storage
 
 Fully component-based frontend architecture
 
-🛠 Tech Stack
+Tech Stack
 **Frontend**
 
 React.js
