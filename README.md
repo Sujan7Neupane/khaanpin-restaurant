@@ -2,7 +2,7 @@ Restaurant MERN Website
 
 A full-stack restaurant management and ordering web application built using the MERN stack. This project focuses on clean UI, scalable backend architecture, and real-world features such as authentication, menu management, and online ordering.
 
-🚀 Features
+Features
 
 Modern, responsive user interface built with React
 
@@ -39,7 +39,7 @@ MongoDB (Mongoose)
 
 JWT Authentication
 
-🔒 Security
+Security
 
 Passwords are securely hashed
 
@@ -47,7 +47,7 @@ Protected routes using JWT middleware
 
 Environment variables used for sensitive data
 
-📌 Future Improvements
+Future Improvements
 
 Admin dashboard for restaurant owners
 
@@ -57,10 +57,6 @@ Order tracking system
 
 Reviews and ratings
 
-📄 License
-
-This project is for learning and practice purposes only.
-
-👤 Author
+Author
 SUJAN NEUPANE
 Developed as a MERN stack practice project to demonstrate full-stack web development skills.
