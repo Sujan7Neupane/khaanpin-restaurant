@@ -12,27 +12,6 @@
   flex-direction: column;
 }
 
-/* Logo */
-.navbar .logo {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-/* Profile */
-.navbar .profile {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #14cb38;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-}
-
 /* Main content */
 .main-content {
   margin-top: 64px;

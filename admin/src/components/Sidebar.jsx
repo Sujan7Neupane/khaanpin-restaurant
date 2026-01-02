@@ -6,6 +6,10 @@ const Sidebar = () => {
     <aside className="sidebar">
       <ul>
         <li>
+          <span>Dashboard</span>
+          <img src={assets.dashboard} className="icon-img" />
+        </li>
+        <li>
           <span>Add Dish</span>
           <img src={assets.add_icon} className="icon-img" />
         </li>
