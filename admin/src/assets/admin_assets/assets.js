@@ -5,6 +5,7 @@ import list_dish from "./list-check.svg";
 import profile_image from "./profile-circle.svg";
 import upload_area from "./upload_area.png";
 import dashboard from "./dashboard.svg";
+import close_icon from "./close.svg";
 
 export const assets = {
   logo,
@@ -14,6 +15,7 @@ export const assets = {
   profile_image,
   upload_area,
   dashboard,
+  close_icon,
 };
 
 export const url = "http://localhost:8000";

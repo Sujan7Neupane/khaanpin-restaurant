@@ -1,0 +1,143 @@
+/* Order Page css */
+
+.orders-page {
+  padding: 32px 40px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Desktop Header */
+.orders-headers {
+  display: none;
+  grid-template-columns: 80px 3fr 1fr 2fr 90px;
+  background: #e0ffed;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.orders-headers span {
+  display: flex;
+  align-items: center;
+}
+
+/* Orders container */
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Order Row */
+.order-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+}
+
+/* Image */
+.order-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Items */
+.order-items p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Customer and Address */
+.order-customer,
+.order-address {
+  font-size: 14px;
+}
+
+/* Status */
+.order-status {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  width: 130px;
+}
+
+/* Label for mobile */
+.label-mobile {
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .orders-headers {
+    display: grid;
+  }
+
+  .order-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 0;
+    display: grid;
+    grid-template-columns: 80px 3fr 1fr 2fr 90px;
+    align-items: center;
+  }
+
+  .order-items p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .order-customer,
+  .order-address {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .label-mobile {
+    display: none;
+  }
+
+  .order-status {
+    width: 105%;
+  }
+}
+
+/* Tablet / small screen adjustments */
+@media (max-width: 480px) {
+  .orders-page {
+    padding: 16px;
+  }
+
+  .order-row {
+    padding: 12px;
+  }
+
+  .order-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .order-items p,
+  .order-customer,
+  .order-address {
+    font-size: 13px;
+  }
+
+  .order-status {
+    width: 100%;
+  }
+}

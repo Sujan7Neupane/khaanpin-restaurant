@@ -1,8 +1,10 @@
 import React from "react";
 import "../styles/AdminDashboard.css";
+import { useNavigate } from "react-router";
 
 // TODO: receive as a prop { recentOrders = []}
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   return (
     <div className="dashboard">
       {/* Welcome */}
@@ -18,11 +20,10 @@ const AdminDashboard = () => {
             title: "Total Revenue",
             value: "$28,450",
             change: "+12.5%",
-            icon: "💰",
           },
-          { title: "Active Orders", value: "142", change: "+8.2%", icon: "📦" },
-          { title: "Products", value: "342", change: "+5.1%", icon: "📊" },
-          { title: "Customers", value: "1,892", change: "+15.3%", icon: "👥" },
+          { title: "Active Orders", value: "142", change: "+8.2%" },
+          { title: "Products", value: "342", change: "+5.1%" },
+          { title: "Customers", value: "1,892", change: "+15.3%" },
         ].map((stat, i) => (
           <div className="stat-card" key={i}>
             <div>
@@ -30,7 +31,7 @@ const AdminDashboard = () => {
               <h3>{stat.value}</h3>
               <span className="positive">{stat.change}</span>
             </div>
-            <div className="icon">{stat.icon}</div>
+            {/* <div className="icon">{stat.icon}</div> */}
           </div>
         ))}
       </div>
@@ -39,7 +40,9 @@ const AdminDashboard = () => {
       <div className="orders">
         <div className="orders-header">
           <h3>Recent Orders</h3>
-          <span className="view-all">View All →</span>
+          <span onClick={() => navigate("/order")} className="view-all">
+            View All →
+          </span>
         </div>
 
         {/* Header Row */}
@@ -51,7 +54,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Data Rows */}
-        {recentOrders.map((order) => (
+        {/* {recentOrders.map((order) => (
           <div className="order-row" key={order._id}>
             <div>{order._id.slice(0, 7)}</div>
             <div>
@@ -72,27 +75,27 @@ const AdminDashboard = () => {
               </span>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
 
       {/* Quick Actions */}
       <div className="actions">
         <div className="action-card indigo">
-          <h4>Add New Product</h4>
-          <p>Quickly add new items to your inventory</p>
-          <button>Add Items</button>
+          <h4>Add New Dish</h4>
+          <p>Quickly add new dish</p>
+          <button onClick={() => navigate("/add")}>Add Dishes</button>
         </div>
 
         <div className="action-card emerald">
-          <h4>Manage Products</h4>
-          <p>View and edit your product catalog</p>
-          <button>View Products</button>
+          <h4>Manage Dishes</h4>
+          <p>View and edit your dishes catalog</p>
+          <button onClick={() => navigate("/list")}>View Dish List</button>
         </div>
 
         <div className="action-card amber">
           <h4>Order Management</h4>
           <p>Process and track customer orders</p>
-          <button>View Orders</button>
+          <button onClick={() => navigate("/order")}>View Orders</button>
         </div>
       </div>
     </div>

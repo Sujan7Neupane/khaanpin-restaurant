@@ -1,4 +1,5 @@
 import "../styles/Sidebar.css";
+import { NavLink } from "react-router-dom";
 import { assets } from "../assets/admin_assets/assets.js";
 
 const Sidebar = () => {
@@ -6,22 +7,30 @@ const Sidebar = () => {
     <aside className="sidebar">
       <ul>
         <li>
-          <span>Dashboard</span>
-          <img src={assets.dashboard} className="icon-img" />
+          <NavLink to={"/"}>
+            <span>Dashboard</span>
+            <img src={assets.dashboard} className="icon-img" />
+          </NavLink>
         </li>
         <li>
-          <span>Add Dish</span>
-          <img src={assets.add_icon} className="icon-img" />
+          <NavLink to={"/add"}>
+            <span>Add Dish</span>
+            <img src={assets.add_icon} className="icon-img" />
+          </NavLink>
         </li>
 
         <li>
-          <span>List Dish</span>
-          <img src={assets.list_dish} className="icon-img" />
+          <NavLink to={"/list"}>
+            <span>List Dish</span>
+            <img src={assets.list_dish} className="icon-img" />
+          </NavLink>
         </li>
 
         <li>
-          <span>Orders List</span>
-          <img src={assets.order_icon} className="icon-img" />
+          <NavLink to={"/order"}>
+            <span>Orders List</span>
+            <img src={assets.order_icon} className="icon-img" />
+          </NavLink>
         </li>
       </ul>
     </aside>
