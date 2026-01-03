@@ -98,7 +98,10 @@
 }
 
 .signup-btn {
-  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+
+  padding: 6px 18px;
   border: 2px solid var(--secondary);
   background: transparent;
   color: var(--secondary);
@@ -108,9 +111,83 @@
   transition: all 0.3s ease;
 }
 
+.signup-btn .arrow img {
+  width: 24px;
+}
+
+.signup-btn .arrow img:hover {
+  color: #000;
+}
+
 .signup-btn:hover {
   background: #fff;
   color: #000;
+}
+
+/* Dropdown */
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown .signup-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px 10px;
+  background: var(--primary);
+  color: var(--secondary);
+  border-radius: 25px;
+  border: 2px solid var(--secondary);
+}
+
+.arrow img {
+  display: flex;
+  width: 20px;
+  height: 20px;
+
+  transition: transform 0.2s;
+}
+
+.user-dropdown .signup-btn:hover .arrow img {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  background: var(--secondary);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: #f1f1f1;
+}
+
+.dropdown-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* hamburger */
@@ -162,5 +239,24 @@
 
   .signup-btn {
     font-size: 12px;
+  }
+
+  .nav-actions {
+    gap: 5px;
+  }
+
+  .dropdown-menu {
+    right: 10px;
+    top: 50px;
+  }
+
+  .signup-btn {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+
+  .dropdown-item {
+    font-size: 14px;
+    padding: 8px 10px;
   }
 }

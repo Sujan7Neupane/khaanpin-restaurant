@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../Header/Header.css";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { logout } from "../../store/authSlice";
 /**
  * Header Component
  * ----------------
@@ -14,6 +16,8 @@ import { useSelector } from "react-redux";
  */
 
 const Header = ({ setShowLogin }) => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   // Controls whether the mobile navigation menu is open or closed
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,6 +38,15 @@ const Header = ({ setShowLogin }) => {
 
   // Toggles the mobile menu open/close state
   const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  // sending value to store
+  const dispatch = useDispatch();
+
+  // User dropdown
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // fetching user from store
+  const { user, userToken } = useSelector((state) => state.auth);
 
   //  Effect: Close mobile menu when clicking outside of it
   //  - Listens for mouse clicks on the document
@@ -71,6 +84,23 @@ const Header = ({ setShowLogin }) => {
   for (let item of cartItems) {
     cartCount += item.quantity;
   }
+
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${backend_url}/api/v1/user/logout`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(logout());
+      toast.success("Logged out successfully");
+      setShowDropdown(false);
+      navigate("/");
+    } catch (err) {
+      toast.error("Logout failed");
+    }
+  };
 
   return (
     <>
@@ -137,9 +167,56 @@ const Header = ({ setShowLogin }) => {
         {/* Right-side actions: Auth button and hamburger menu */}
         <div className="nav-actions">
           {/* Opens modal controlled by Navbar(parent) */}
-          <button onClick={() => setShowLogin(true)} className="signup-btn">
+
+          {/* Normally */}
+          {/* <button onClick={() => setShowLogin(true)} className="signup-btn">
             Sign In
-          </button>
+          </button> */}
+
+          {/* normal -> signin button | user loggedin -> gropdown with user profile and logout */}
+          {!user && !userToken ? (
+            <button onClick={() => setShowLogin(true)} className="signup-btn">
+              Sign In
+            </button>
+          ) : (
+            <div className="user-dropdown">
+              <button
+                className="signup-btn"
+                onClick={() => setShowDropdown((prev) => !prev)}
+              >
+                {user.username}{" "}
+                <span className="arrow">
+                  <img src={assets.dropdown_icon} alt="dropdown arrow" />
+                </span>
+              </button>
+
+              {showDropdown && (
+                <div className="dropdown-menu">
+                  <button
+                    className="dropdown-item"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <img
+                      src={assets.profile_circle}
+                      alt="profile"
+                      className="dropdown-icon"
+                    />
+                    Profile
+                  </button>
+
+                  <button className="dropdown-item" onClick={handleLogout}>
+                    <img
+                      src={assets.logout_icon}
+                      alt="logout"
+                      className="dropdown-icon"
+                    />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Hamburger menu for mobile navigation */}
           {/* ref passed here useRef */}
           <div ref={hamburgerRef} className="hamburger" onClick={toggleMenu}>

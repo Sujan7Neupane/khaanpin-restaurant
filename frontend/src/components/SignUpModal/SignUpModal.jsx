@@ -4,11 +4,16 @@ import React, { useState } from "react";
 import "../SignUpModal/SignUpModal.css";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/authSlice";
 
 // setShowLogin -> passed from the parent component which will change the modal state
 const SignUpModal = ({ setShowLogin }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   // console.log(backend_url);
+
+  // for sending current state of logged in user to redux store
+  const dispatch = useDispatch();
 
   // this state identifies whether the user is signup or not
   // Based on the state signup and login page is shown
@@ -66,7 +71,21 @@ const SignUpModal = ({ setShowLogin }) => {
       }
 
       if (response.data.success) {
-        console.log(response);
+        // console.log(response);
+
+        // for current user -> when user loggs in display profile instead of signin button
+        const currentUserRes = await axios.get(
+          `${backend_url}/api/v1/user/current-user`,
+          { withCredentials: true }
+        );
+        // console.log(currentUserRes.data.data);
+        dispatch(
+          setUser({
+            user: currentUserRes.data.data,
+            userToken: "",
+          })
+        );
+
         toast.success(response.data.message || "Success");
         setShowLogin(false);
       }

@@ -34,7 +34,7 @@ const App = () => {
           Rendered conditionally based on showLogin state
           Pass setShowLogin to allow modal to close itself
           */}
-      {showLogin ? <SignUpModal setShowLogin={setShowLogin} /> : <></>}
+      {showLogin && <SignUpModal setShowLogin={setShowLogin} />}
 
       {/* 
           Main Page Layout
