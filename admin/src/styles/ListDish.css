@@ -20,7 +20,7 @@
 /* Desktop header */
 .product-header {
   display: none;
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
   background: #e0ffed;
   padding: 12px;
   font-weight: 600;
@@ -92,7 +92,7 @@
 
   .product-row {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
     align-items: center;
   }
 
@@ -103,7 +103,6 @@
 
   .product-row .product-action {
     display: flex;
-    justify-content: center;
   }
 }
 

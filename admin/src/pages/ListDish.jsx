@@ -16,7 +16,7 @@ const ListDish = () => {
     try {
       // gettimg list as a response
       const response = await axios.get(`${backend_url}/api/v1/dish/list`);
-      console.log(response.data);
+      // console.log(response.data);
 
       const dishesArray = response.data.data?.dishes || [];
 
@@ -34,6 +34,26 @@ const ListDish = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    // console.log(id);
+
+    // TODO: future making this modal instead of confirm
+    if (!window.confirm("Are you sure you want to delete this dish?")) return;
+
+    try {
+      const response = await axios.delete(`${backend_url}/api/v1/dish/delete`, {
+        data: { id }, //id is send using body not thorugh params
+      });
+
+      if (response.data.success) {
+        setDishList((prev) => prev.filter((dish) => dish._id !== id));
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Failed to delete dish");
+    }
+  };
+
   useEffect(() => {
     fetchDishList();
   }, []);
@@ -47,9 +67,8 @@ const ListDish = () => {
           <span>Image</span>
           <span>Name</span>
           <span>Category</span>
-          <span>Sub Category</span>
           <span>Price</span>
-          <span>Action</span>
+          <span className="text-center">Action</span>
         </div>
 
         {/* Product Row Example */}
@@ -66,10 +85,10 @@ const ListDish = () => {
                 />
                 <p className="product-name">{dish.name}</p>
                 <p className="product-category">{dish.category}</p>
-                <p className="product-subcategory">{dish.subcategory}</p>
                 <p className="product-price">${dish.price.toFixed(2)}</p>
                 <div className="product-action">
                   <img
+                    onClick={() => handleDelete(dish._id)}
                     src={assets.close_icon}
                     alt="delete"
                     className="delete-icon"
