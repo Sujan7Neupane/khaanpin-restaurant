@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Footer, Header, SignUpModal } from "./components/index.js";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 /**
  * App Component
@@ -23,6 +24,11 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        style={{ zIndex: 2000 }}
+      />
       {/*
           Authentication Modal
           Rendered conditionally based on showLogin state
