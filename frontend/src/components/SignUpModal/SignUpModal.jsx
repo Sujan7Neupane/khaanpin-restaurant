@@ -19,6 +19,9 @@ const SignUpModal = ({ setShowLogin }) => {
   // Based on the state signup and login page is shown
   const [isSignup, setIsSignup] = useState(true);
 
+  // for loading spinner on login signup button
+  const [loading, setLoading] = useState(false);
+
   // state for form handling
   const [data, setData] = useState({
     name: "",
@@ -38,6 +41,8 @@ const SignUpModal = ({ setShowLogin }) => {
   // login handler
   const handleLoginSignup = async (e) => {
     e.preventDefault();
+
+    if (loading) return;
 
     try {
       let response;
@@ -155,9 +160,10 @@ const SignUpModal = ({ setShowLogin }) => {
               required
             />
 
-            <button type="submit" className="auth-btn">
+            <button type="submit" className="auth-btn" disabled={loading}>
               {/* if page is signup shows signup and Login show Login text */}
-              {isSignup ? "Sign Up" : "Login"}
+              {loading && <span className="btn-spinner" />}
+              {loading ? "Processing..." : "Login"}
             </button>
           </form>
 
