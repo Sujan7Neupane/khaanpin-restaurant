@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../Profile/Profile.css";
 import { assets } from "../../assets/frontend_assets/assets";
@@ -15,9 +15,20 @@ const UserProfile = () => {
   // Get user from Redux store
   const { user } = useSelector((state) => state.auth);
 
-  // If no user, show a message or redirect
+  console.log("Profile", user);
+
+  useEffect(() => {
+    if (!user) navigate("/");
+  }, [user]);
+
   if (!user) {
-    navigate("/");
+    return (
+      <div className="profile-container">
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>
+          Loading profile...
+        </p>
+      </div>
+    );
   }
 
   const handleLogout = async () => {
@@ -45,8 +56,8 @@ const UserProfile = () => {
             alt="User Avatar"
             className="profile-avatar"
           />
-          <h2 className="profile-name">{user.name || "No Name"}</h2>
-          <p className="profile-username">@{user.username || "username"}</p>
+          <h2 className="profile-name">{user?.name || "No Name"}</h2>
+          <p className="profile-username">@{user?.username || "username"}</p>
         </div>
 
         {/* User Info */}
@@ -54,15 +65,15 @@ const UserProfile = () => {
           <h3>Profile Information</h3>
           <div className="info-item">
             <span className="label">Name:</span>
-            <span className="value">{user.name || "Not provided"}</span>
+            <span className="value">{user?.name || "Not provided"}</span>
           </div>
           <div className="info-item">
             <span className="label">Username:</span>
-            <span className="value">{user.username || "Not provided"}</span>
+            <span className="value">{user?.username || "Not provided"}</span>
           </div>
           <div className="info-item">
             <span className="label">Email:</span>
-            <span className="value">{user.email || "Not provided"}</span>
+            <span className="value">{user?.email || "Not provided"}</span>
           </div>
           <div className="info-item">
             <span className="label">Joined:</span>

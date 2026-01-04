@@ -192,7 +192,7 @@ const Header = ({ setShowLogin }) => {
                 className="signup-btn"
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
-                {user.username}{" "}
+                {user ? user.username : "loading..."}{" "}
                 <span className="arrow">
                   <img src={assets.dropdown_icon} alt="dropdown arrow" />
                 </span>

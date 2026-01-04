@@ -51,9 +51,7 @@ const App = () => {
     };
 
     loadCurrentUser();
-  }, [dispatch]);
-
-  if (loading) return null;
+  }, []);
 
   return (
     <>

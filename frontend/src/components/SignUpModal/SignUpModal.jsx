@@ -79,12 +79,7 @@ const SignUpModal = ({ setShowLogin }) => {
           { withCredentials: true }
         );
         // console.log(currentUserRes.data.data);
-        dispatch(
-          setUser({
-            user: currentUserRes.data.data,
-            userToken: "",
-          })
-        );
+        dispatch(setUser(currentUserRes.data.data));
 
         toast.success(response.data.message || "Success");
         setShowLogin(false);
