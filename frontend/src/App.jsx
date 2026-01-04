@@ -28,7 +28,7 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   // prevent Header from rendering before the user is loaded
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   /**
    * On app load:

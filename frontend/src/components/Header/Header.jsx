@@ -45,6 +45,9 @@ const Header = ({ setShowLogin }) => {
   // User dropdown
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // to remove dropdown on clicking outside of box
+  const dropdownRef = useRef(null);
+
   // fetching user from store
   const { user } = useSelector((state) => state.auth);
 
@@ -61,6 +64,10 @@ const Header = ({ setShowLogin }) => {
       ) {
         setIsOpen(false);
       }
+      // close user dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -73,6 +80,7 @@ const Header = ({ setShowLogin }) => {
   //This ensures the navbar does not stay open after going to other pages
   useEffect(() => {
     setIsOpen(false);
+    setShowDropdown(false);
   }, [location.pathname]);
 
   // Get cart items from Redux
@@ -179,7 +187,7 @@ const Header = ({ setShowLogin }) => {
               Sign In
             </button>
           ) : (
-            <div className="user-dropdown">
+            <div className="user-dropdown" ref={dropdownRef}>
               <button
                 className="signup-btn"
                 onClick={() => setShowDropdown((prev) => !prev)}
