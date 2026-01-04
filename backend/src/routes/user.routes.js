@@ -19,6 +19,6 @@ router.route("/logout").post(verifyJWT, userLogout);
 
 // router.route("/refresh-token").get(verifyJwt, rotateRefreshToken);
 
-router.route("/current-user").get(verifyJWT, getCurrentUser);
+router.route("/current-user").get(getCurrentUser);
 
 export default router;

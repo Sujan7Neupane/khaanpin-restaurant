@@ -3,6 +3,7 @@ import { User } from "../models/user.models.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
 // To generate jwt tokens for login and register
 // After user login and register for both
@@ -119,10 +120,9 @@ const userLogin = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
-    // TODO for future deployment
-    // sameSite: "None",
-    // maxAge: 1000 * 60 * 60 * 24 * 7,
+    secure: false,
+    sameSite: "Strict",
+    maxAge: 1000 * 60 * 60 * 24 * 7,
   };
 
   return res
@@ -169,7 +169,14 @@ const userLogout = asyncHandler(async (req, res) => {
 
 // To get the current logged in user
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).select(
+  // here token is verified once the page loads which persists the user data on login
+  // previously the user logged out on page refresh
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) return res.status(401);
+  const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+  const user = await User.findById(decoded._id).select(
     "-password -refreshToken"
   );
 
