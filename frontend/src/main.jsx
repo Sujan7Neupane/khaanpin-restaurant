@@ -8,7 +8,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 
-import { HomePage, Cart, PlaceOrder, About, Contact } from "./pages/index.js";
+import {
+  HomePage,
+  Cart,
+  PlaceOrder,
+  About,
+  Contact,
+  Profile,
+} from "./pages/index.js";
 
 // TODO: Lazy Load the pages for optimization
 // const HomePage = lazy(() => import("./pages/index.js"));
@@ -39,6 +46,7 @@ const router = createBrowserRouter([
       { path: "order", element: <PlaceOrder /> },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
+      { path: "profile", element: <Profile /> },
     ],
   },
 ]);
