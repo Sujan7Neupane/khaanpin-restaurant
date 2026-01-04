@@ -46,7 +46,7 @@ const Header = ({ setShowLogin }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   // fetching user from store
-  const { user, userToken } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   //  Effect: Close mobile menu when clicking outside of it
   //  - Listens for mouse clicks on the document
@@ -174,7 +174,7 @@ const Header = ({ setShowLogin }) => {
           </button> */}
 
           {/* normal -> signin button | user loggedin -> gropdown with user profile and logout */}
-          {!user && !userToken ? (
+          {!user ? (
             <button onClick={() => setShowLogin(true)} className="signup-btn">
               Sign In
             </button>

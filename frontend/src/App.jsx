@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Footer, Header, SignUpModal } from "./components/index.js";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { logout, setUser } from "./store/authSlice.js";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 /**
  * App Component
@@ -15,12 +18,42 @@ import { ToastContainer } from "react-toastify";
  * Also manages the visibility of the SignUp/Login modal.
  */
 const App = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const dispatch = useDispatch();
   /**
    * Controls the visibility of the SignUp/Login modal
    * true  -> modal visible
    * false -> modal hidden
    */
   const [showLogin, setShowLogin] = useState(false);
+
+  // prevent Header from rendering before the user is loaded
+  const [loading, setLoading] = useState(true);
+
+  /**
+   * On app load:
+   * - Call /current-user
+   * - Backend checks refresh token from httpOnly cookie
+   * - Persist login across refresh
+   */
+  useEffect(() => {
+    const loadCurrentUser = async () => {
+      try {
+        const res = await axios.get(`${backend_url}/api/v1/user/current-user`, {
+          withCredentials: true,
+        });
+        dispatch(setUser(res.data.data)); // store user in Redux
+      } catch (err) {
+        dispatch(logout()); // clear Redux if token invalid/missing
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCurrentUser();
+  }, [dispatch]);
+
+  if (loading) return null;
 
   return (
     <>
