@@ -78,6 +78,31 @@
   margin: 0;
 }
 
+/* loading state */
+.loading-div {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.loading-div p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #555;
+  letter-spacing: 0.5px;
+}
+
+/* error state */
+.error-text {
+  text-align: center;
+  margin-top: 3rem;
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
 /* RESPONSIVE */
 @media screen and (max-width: 900px) {
   .dish-item-img-container {

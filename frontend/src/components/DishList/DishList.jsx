@@ -1,87 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./DishList.css";
-import { assets } from "../../assets/frontend_assets/assets";
 import DishCard from "../DishCard/DishCard";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchDishError,
+  fetchDishStart,
+  fetchDishSuccess,
+} from "../../store/dishSlice";
 
 // Currently manually made dishList
 // future will make controllers in backend
 
-const dishesList = [
-  {
-    id: 1,
-    name: "Chicken Pizza",
-    desc: "Stone-baked pizza with melted cheese and fresh toppings.",
-    price: 499,
-    rating: 4.5,
-    image: assets.pizza_img,
-    category: "Pizza",
-  },
-  {
-    id: 2,
-    name: "Veg Momo",
-    desc: "Steamed dumplings stuffed with fresh vegetables.",
-    price: 199,
-    rating: 4.2,
-    image: assets.momo_img,
-    category: "Momo",
-  },
-  {
-    id: 3,
-    name: "Chowmein",
-    desc: "Stir-fried noodles with fresh veggies and sauce.",
-    price: 249,
-    rating: 4.3,
-    image: assets.chowmein_img,
-    category: "Chowmein",
-  },
-  {
-    id: 4,
-    name: "Paneer Pizza",
-    desc: "Cheesy pizza topped with spicy paneer cubes.",
-    price: 549,
-    rating: 4.6,
-    image: assets.pizza_img,
-    category: "Pizza",
-  },
-  {
-    id: 5,
-    name: "Paneer Pizza",
-    desc: "Cheesy pizza topped with spicy paneer cubes.",
-    price: 549,
-    rating: 4.6,
-    image: assets.pizza_img,
-    category: "Pizza",
-  },
-  {
-    id: 6,
-    name: "Paneer Pizza",
-    desc: "Cheesy pizza topped with spicy paneer cubes.",
-    price: 549,
-    rating: 4.6,
-    image: assets.pizza_img,
-    category: "Pizza",
-  },
-  {
-    id: 7,
-    name: "Paneer Pizza",
-    desc: "Cheesy pizza topped with spicy paneer cubes.",
-    price: 549,
-    rating: 4.6,
-    image: assets.pizza_img,
-    category: "Pizza",
-  },
-  {
-    id: 8,
-    name: "Veg Momo",
-    desc: "Steamed dumplings stuffed with fresh vegetables.",
-    price: 199,
-    rating: 4.2,
-    image: assets.momo_img,
-    category: "Momo",
-  },
-];
+// const dishesList = [];
 
 const DishList = ({ category }) => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const dispatch = useDispatch();
+
+  // fetching data from redux store
+  const { dishes, loading, error } = useSelector((state) => state.dish);
+
+  useEffect(() => {
+    try {
+      dispatch(fetchDishStart());
+      const fetchDishList = async () => {
+        const response = await axios.get(`${backend_url}/api/v1/dish/list`);
+
+        // sending data to store
+        console.log(response.data?.data?.dishes);
+        dispatch(fetchDishSuccess(response.data?.data?.dishes));
+      };
+      fetchDishList();
+    } catch (error) {
+      dispatch(fetchDishError(err.message));
+    }
+  }, [dispatch]);
+
+  // if no items in the list
+  if (dishes.length === 0) {
+    return (
+      <div className="loading-div">
+        <p className="text-center">No items in the dishes</p>
+      </div>
+    );
+  }
+
+  // when app is loading
+  if (loading)
+    return (
+      <div className="loading-div">
+        <p className="text-center">Loading dishes...</p>
+      </div>
+    );
+
+  // if any errors
+  if (error) return <p className="error-text">{error}</p>;
+
   return (
     <div className="dish-display container standard-padding">
       {/* Section Title */}
@@ -89,7 +64,7 @@ const DishList = ({ category }) => {
 
       {/* Column Container */}
       <div className="dish-list">
-        {dishesList.map((item, index) => {
+        {dishes.map((item, index) => {
           // Display food according to the menu
           if (category === "All" || category === item.category) {
             return (
@@ -98,7 +73,7 @@ const DishList = ({ category }) => {
                 // sending data as a props from here to DishCard Component
                 // which will be received as a parameter teta like const DishCard({yaha})
                 key={index}
-                id={item.id}
+                id={item._id}
                 name={item.name}
                 desc={item.desc}
                 price={item.price}
