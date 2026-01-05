@@ -116,6 +116,58 @@ const addToCart = asyncHandler(async (req, res) => {
 // }
 
 // removing dish items from cart
-const removeFromCart = asyncHandler(async (req, res) => {});
+// remove entire item from cart
+// doesnt care about quantity
+const removeFromCart = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const { dishId } = req.body;
+
+  // validation
+  if (!dishId) {
+    throw new ApiError(400, "Dish ID is required");
+  }
+
+  // Find user's cart
+  const cart = await Cart.findOne({ user: userId });
+
+  // checking cart
+  if (!cart) {
+    throw new ApiError(404, "Cart not found");
+  }
+
+  //  Remove dish from cartData
+  const initialLength = cart.cartData.length;
+
+  //removes by filtering the cartData items
+  // create new cartData-> puts all items except one which dish->_id matches with dishId
+  cart.cartData = cart.cartData.filter(
+    (item) => item.dish.toString() !== dishId
+  );
+
+  // If dish was not found in cart
+  if (cart.cartData.length === initialLength) {
+    throw new ApiError(404, "Dish not found in cart");
+  }
+
+  // Recalculate totalprice
+  // because totalprice changes on changing price
+  cart.totalPrice = cart.cartData.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  // 5. Save cart
+  await cart.save();
+
+  // final response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, cart, "Item removed from cart"));
+});
 
 export { getCartData, addToCart, removeFromCart };
+
+// expects this from body
+// {
+//   "dishId": "695b624c38cb83c2bf37a0f8"
+// }
