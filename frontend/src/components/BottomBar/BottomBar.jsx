@@ -22,19 +22,19 @@ const BottomBar = ({ showBar }) => {
 
   // Calculate total quantity (cart number)
   // TODO: will be handled from backend later
-  let cartCount = 0;
-  for (let item of cartItems) {
-    cartCount += item.quantity;
-  }
+  // let cartCount = 0;
+  // for (let item of cartItems) {
+  //   cartCount += item.quantity;
+  // }
 
   // calculated total amount according to the price of the product
   // reduce() takes an array and turns it into a single value.
   // eg: [1, 2, 3, 4] → 10   first: all price in array -> result: total price
   // TODO: will be handled from the backend later
-  const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  // const totalAmount = cartItems.reduce(
+  //   (acc, item) => acc + item.price * item.quantity,
+  //   0
+  // );
 
   return (
     /**
@@ -69,11 +69,12 @@ const BottomBar = ({ showBar }) => {
           />
 
           {/* Dynamic badge: total number of items */}
-          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+          {/* TODO: add cart count */}
+          {/* {cartCount > 0 && <span className="cart-badge">{cartCount}</span>} */}
         </div>
 
         {/* Displays current cart total */}
-        <p className="cart-total">$ {totalAmount.toFixed(2)}</p>
+        {/* <p className="cart-total">$ {totalAmount.toFixed(2)}</p> */}
       </div>
     </div>
   );

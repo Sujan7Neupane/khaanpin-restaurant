@@ -88,10 +88,10 @@ const Header = ({ setShowLogin }) => {
 
   // Calculate total quantity (cart number)
   // TODO: will be handled from backend later
-  let cartCount = 0;
-  for (let item of cartItems) {
-    cartCount += item.quantity;
-  }
+  // let cartCount = 0;
+  // for (let item of cartItems) {
+  //   cartCount += item.quantity;
+  // }
 
   // Logout handler
   const handleLogout = async () => {
@@ -138,9 +138,9 @@ const Header = ({ setShowLogin }) => {
             alt="cart"
             className="icon"
           />
-
           {/* Show count only if cart is not empty */}
-          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          {/* TODO: add cartCOunt */}
+          {/* {cartCount > 0 && <span className="cart-count">{cartCount}</span>} */}
         </div>
       </div>
 

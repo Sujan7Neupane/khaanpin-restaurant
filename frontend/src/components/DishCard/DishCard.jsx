@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../DishCard/DishCard.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../../store/cartSlice";
+// import { addToCart, removeFromCart } from "../../store/cartSlice";
 
 /**
  * DishCard Component
@@ -26,6 +26,8 @@ const DishCard = ({ id, name, price, desc, image }) => {
   // Redux dispatch to dispatch/send data using payload
   const dispatch = useDispatch();
 
+  // TODO: ADD TO CART HERE
+
   return (
     <div className="dish-item">
       {/* Dish Image and Add/Remove Controls */}
@@ -44,15 +46,15 @@ const DishCard = ({ id, name, price, desc, image }) => {
             alt="add"
             // here id name price image is passed to the store
             onClick={() => {
-              setCartCount(1);
-              dispatch(
-                addToCart({
-                  id,
-                  name,
-                  price,
-                  image,
-                })
-              );
+              // setCartCount(1);
+              // dispatch(
+              //   addToCart({
+              //     id,
+              //     name,
+              //     price,
+              //     image,
+              //   })
+              // );
             }}
             loading="lazy"
           />
