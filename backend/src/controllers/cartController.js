@@ -106,7 +106,21 @@ const addToCart = asyncHandler(async (req, res) => {
   // Save cart to db
   await cart.save();
 
-  return res.status(200).json(new ApiResponse(200, cart, "Item added to cart"));
+  // Populate dish info for frontend
+  // this will render the quantity properly
+  const populatedCart = await Cart.findById(cart._id).populate("cartData.dish");
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        cartData: populatedCart.cartData,
+        totalPrice: populatedCart.totalPrice,
+        _id: populatedCart._id,
+      },
+      "Dish added to cart"
+    )
+  );
 });
 
 // TODO:sending this from body
