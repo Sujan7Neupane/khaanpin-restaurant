@@ -27,7 +27,7 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   // all the cart Items inside the cart
-  const { cartData, loading } = useSelector((state) => state.cart);
+  const { cartData, loading, totalPrice } = useSelector((state) => state.cart);
 
   // console.log(cartData);
   // console.log(totalPrice);
@@ -80,12 +80,6 @@ const CartPage = () => {
     }
   };
 
-  // Calculate total amount
-  const totalAmount = cartData.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
   return (
     <div className="cart-page">
       <h1>Your Cart</h1>
@@ -133,7 +127,7 @@ const CartPage = () => {
       {/* Total and Proceed to Payment Section */}
       <div className="total-section">
         {/* displays total amount here */}
-        <h2>Grand Total: ${totalAmount.toFixed(2)}</h2>
+        <h2>Grand Total: $ {(totalPrice || 0).toFixed(2)}</h2>
 
         {/* Proceed to Payment button */}
         <button

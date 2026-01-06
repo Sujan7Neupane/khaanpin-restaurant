@@ -2,6 +2,7 @@ import "../BottomBar/BottomBar.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+import { selectTotalQuantity } from "../../store/cartSlice";
 
 /**
  * BottomBar Component Description
@@ -18,7 +19,13 @@ const BottomBar = ({ showBar }) => {
   const navigate = useNavigate();
 
   // Get cart items from Redux
-  const { cartData } = useSelector((state) => state.cart);
+  const { cartData, totalPrice } = useSelector((state) => state.cart);
+  console.log(totalPrice);
+
+  // to set total cart items with quantity
+  const totalQuantity = useSelector(selectTotalQuantity);
+
+  console.log(cartData);
 
   return (
     /**
@@ -54,13 +61,13 @@ const BottomBar = ({ showBar }) => {
 
           {/* Dynamic badge: total number of items */}
           {/* TODO: add cart count */}
-          {cartData.length > 0 && (
-            <span className="cart-badge">{cartData.length}</span>
+          {totalQuantity > 0 && (
+            <span className="cart-badge">{totalQuantity}</span>
           )}
         </div>
 
         {/* Displays current cart total */}
-        {/* <p className="cart-total">$ {totalAmount.toFixed(2)}</p> */}
+        <p className="cart-total">$ {(totalPrice || 0).toFixed(2)}</p>
       </div>
     </div>
   );

@@ -43,3 +43,9 @@ const cartSlice = createSlice({
 
 export const { setCart, clearCart, setLoading, setError } = cartSlice.actions;
 export default cartSlice.reducer;
+
+// Problem: items added = cartCount
+// it must be: items in cart = items+quantity
+// this selector adds the quantity of the products
+export const selectTotalQuantity = (state) =>
+  state.cart.cartData.reduce((total, item) => total + item.quantity, 0);

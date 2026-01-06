@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { logout } from "../../store/authSlice";
-import { clearCart } from "../../store/cartSlice";
+import { clearCart, selectTotalQuantity } from "../../store/cartSlice";
 /**
  * Header Component
  * ----------------
@@ -87,12 +87,9 @@ const Header = ({ setShowLogin }) => {
   // Get cart items from Redux
   const { cartData } = useSelector((state) => state.cart);
 
-  // Calculate total quantity (cart number)
-  // TODO: will be handled from backend later
-  // let cartCount = 0;
-  // for (let item of cartItems) {
-  //   cartCount += item.quantity;
-  // }
+  // total quantity in cart cares about the quantity not just items
+  // selectTotalQuantity is a selector that gives total count in cart
+  const totalQuantity = useSelector(selectTotalQuantity);
 
   // Logout handler
   const handleLogout = async () => {
@@ -142,9 +139,9 @@ const Header = ({ setShowLogin }) => {
           />
           {/* Show count only if cart is not empty */}
           {/* TODO: add cartCOunt */}
-          {/* {cartData.length > 0 && (
-            <span className="cart-count">{cartData.length}</span>
-          )} */}
+          {totalQuantity > 0 && (
+            <span className="cart-count">{totalQuantity}</span>
+          )}
         </div>
       </div>
 
