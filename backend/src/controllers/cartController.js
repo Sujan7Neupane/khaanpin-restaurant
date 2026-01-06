@@ -169,7 +169,59 @@ const removeFromCart = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, cart, "Item removed from cart"));
 });
 
-export { getCartData, addToCart, removeFromCart };
+// this removes the single quantity not the whole cart item
+const removeSingleItemFromCart = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const { dishId } = req.body;
+
+  if (!dishId) {
+    throw new ApiError(400, "Dish ID is required");
+  }
+
+  const cart = await Cart.findOne({ user: userId });
+
+  if (!cart) {
+    throw new ApiError(404, "Cart not found");
+  }
+  // cartItemIndex is used to locate the exact position of a specific dish inside the cart array
+  // so that we can safely remove them
+  // Find the cart item
+  const cartItem = cart.cartData.find(
+    (item) => item.dish.toString() === dishId
+  );
+
+  if (!cartItem) {
+    throw new ApiError(404, "Item not found in cart");
+  }
+
+  // Decrement quantity
+  cartItem.quantity -= 1;
+
+  // Remove items with zero quantity
+  cart.cartData = cart.cartData.filter((item) => item.quantity > 0);
+
+  await cart.save();
+
+  const populatedCart = await Cart.findOne({ user: userId }).populate(
+    "cartData.dish"
+  );
+
+  // console.log(populatedCart);
+  // send cartData, totalprice and _id because store expects these value
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        cartData: populatedCart.cartData,
+        totalPrice: populatedCart.cartData.price,
+        _id: populatedCart._id,
+      },
+      "Item updated"
+    )
+  );
+});
+
+export { getCartData, addToCart, removeFromCart, removeSingleItemFromCart };
 
 // expects this from body
 // {
