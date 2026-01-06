@@ -28,7 +28,7 @@ const DishList = ({ category }) => {
         const response = await axios.get(`${backend_url}/api/v1/dish/list`);
 
         // sending data to store
-        console.log(response.data?.data?.dishes);
+        // console.log(response.data?.data?.dishes);
         dispatch(fetchDishSuccess(response.data?.data?.dishes));
       };
       fetchDishList();

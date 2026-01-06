@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../DishCard/DishCard.css";
 import { assets } from "../../assets/frontend_assets/assets";
-import { useDispatch } from "react-redux";
-// import { addToCart, removeFromCart } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart, setCart } from "../../store/cartSlice";
+import axios from "axios";
 
 /**
  * DishCard Component
@@ -20,13 +21,42 @@ import { useDispatch } from "react-redux";
 // Currently comes manually from object
 // TODO: data from backend
 const DishCard = ({ id, name, price, desc, image }) => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   // cart ko number counts
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0); //removed local state
+  // Get cart items from Redux
+  const { cartData } = useSelector((state) => state.cart);
+
+  // cart item that we added using addTocart
+  const cartItem = cartData.find((item) => item.dish._id === id);
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   // Redux dispatch to dispatch/send data using payload
   const dispatch = useDispatch();
 
   // TODO: ADD TO CART HERE
+  const handleAddToCart = async () => {
+    try {
+      console.log("add to cart");
+      console.log(id);
+
+      const res = await axios.post(
+        `${backend_url}/api/v1/cart/add`,
+        {
+          dishId: id,
+          quantity: 1,
+        },
+        { withCredentials: true }
+      );
+
+      console.log(res);
+
+      dispatch(setCart(res.data.data));
+    } catch (error) {
+      dispatch(clearCart());
+    }
+  };
 
   return (
     <div className="dish-item">
@@ -35,7 +65,7 @@ const DishCard = ({ id, name, price, desc, image }) => {
         <img src={image} className="dish-item-image" alt={name} />
 
         {/* Conditional rendering for cart controls */}
-        {cartCount === 0 ? (
+        {quantity === 0 ? (
           /**
            * When dish is not in the cart, show a white "Add" icon
            * Clicking it sets cartCount to 1
@@ -45,17 +75,7 @@ const DishCard = ({ id, name, price, desc, image }) => {
             src={assets.add_icon_white}
             alt="add"
             // here id name price image is passed to the store
-            onClick={() => {
-              // setCartCount(1);
-              // dispatch(
-              //   addToCart({
-              //     id,
-              //     name,
-              //     price,
-              //     image,
-              //   })
-              // );
-            }}
+            onClick={handleAddToCart}
             loading="lazy"
           />
         ) : (
@@ -65,32 +85,19 @@ const DishCard = ({ id, name, price, desc, image }) => {
             <img
               src={assets.remove_icon_red}
               alt="remove"
-              onClick={() => {
-                setCartCount((prev) => prev - 1);
-                dispatch(removeFromCart(id));
-              }}
+              // onClick={removeFromCart}
               loading="lazy"
             />
 
             {/* Display current count */}
-            <p>{cartCount}</p>
+            <p>{quantity}</p>
 
             {/* Add one item */}
             <img
               src={assets.add_icon_green}
               alt="add"
               // here id name price image is passed to the store
-              onClick={() => {
-                setCartCount((prev) => prev + 1);
-                dispatch(
-                  addToCart({
-                    id,
-                    name,
-                    price,
-                    image,
-                  })
-                );
-              }}
+              onClick={handleAddToCart}
               loading="lazy"
             />
           </div>

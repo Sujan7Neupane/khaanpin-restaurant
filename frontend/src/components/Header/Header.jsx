@@ -84,7 +84,7 @@ const Header = ({ setShowLogin }) => {
   }, [location.pathname]);
 
   // Get cart items from Redux
-  const cartItems = useSelector((state) => state.cart.items);
+  const { cartData } = useSelector((state) => state.cart);
 
   // Calculate total quantity (cart number)
   // TODO: will be handled from backend later
@@ -140,7 +140,9 @@ const Header = ({ setShowLogin }) => {
           />
           {/* Show count only if cart is not empty */}
           {/* TODO: add cartCOunt */}
-          {/* {cartCount > 0 && <span className="cart-count">{cartCount}</span>} */}
+          {cartData.length > 0 && (
+            <span className="cart-count">{cartData.length}</span>
+          )}
         </div>
       </div>
 

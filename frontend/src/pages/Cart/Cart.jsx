@@ -71,10 +71,16 @@ const CartPage = () => {
               <img src={item.dish.image} alt={item.dish.name} />
               <div className="cart-info">
                 {/* Displaying other information */}
-                <h3>{item.name}</h3>
-                <p>Price: ${item.price}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Total: ${item.price * item.quantity}</p>
+                <h3>{item.dish.name}</h3>
+                <p>
+                  <b>Price: </b>${item.price}
+                </p>
+                <p>
+                  <b>Quantity:</b> {item.quantity}
+                </p>
+                <p>
+                  <b>Total:</b> ${item.price * item.quantity}
+                </p>
               </div>
 
               <div className="icon-wrapper">

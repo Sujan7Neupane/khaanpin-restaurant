@@ -18,23 +18,7 @@ const BottomBar = ({ showBar }) => {
   const navigate = useNavigate();
 
   // Get cart items from Redux
-  const cartItems = useSelector((state) => state.cart.items);
-
-  // Calculate total quantity (cart number)
-  // TODO: will be handled from backend later
-  // let cartCount = 0;
-  // for (let item of cartItems) {
-  //   cartCount += item.quantity;
-  // }
-
-  // calculated total amount according to the price of the product
-  // reduce() takes an array and turns it into a single value.
-  // eg: [1, 2, 3, 4] → 10   first: all price in array -> result: total price
-  // TODO: will be handled from the backend later
-  // const totalAmount = cartItems.reduce(
-  //   (acc, item) => acc + item.price * item.quantity,
-  //   0
-  // );
+  const { cartData } = useSelector((state) => state.cart);
 
   return (
     /**
@@ -70,7 +54,9 @@ const BottomBar = ({ showBar }) => {
 
           {/* Dynamic badge: total number of items */}
           {/* TODO: add cart count */}
-          {/* {cartCount > 0 && <span className="cart-badge">{cartCount}</span>} */}
+          {cartData.length > 0 && (
+            <span className="cart-badge">{cartData.length}</span>
+          )}
         </div>
 
         {/* Displays current cart total */}
