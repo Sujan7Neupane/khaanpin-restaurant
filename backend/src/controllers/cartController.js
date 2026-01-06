@@ -159,6 +159,10 @@ const removeFromCart = asyncHandler(async (req, res) => {
   // 5. Save cart
   await cart.save();
 
+  // Problem: after deleting cart Items the image doesnt show have to manually refresh
+  // solution: added image here which will show up
+  await cart.populate("cartData.dish");
+
   // final response
   return res
     .status(200)
