@@ -3,7 +3,7 @@ import { Footer, Header, SignUpModal } from "./components/index.js";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { logout, setUser } from "./store/authSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setCart } from "./store/cartSlice.js";
 
@@ -20,6 +20,9 @@ import { setCart } from "./store/cartSlice.js";
  */
 const App = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  const { user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   /**
    * Controls the visibility of the SignUp/Login modal
@@ -57,6 +60,7 @@ const App = () => {
   // load cart initially
   useEffect(() => {
     const fetchCart = async () => {
+      if (!user) return;
       try {
         const res = await axios.get(`${backend_url}/api/v1/cart/cart-data`, {
           withCredentials: true,

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { logout } from "../../store/authSlice";
+import { clearCart } from "../../store/cartSlice";
 /**
  * Header Component
  * ----------------
@@ -102,6 +103,7 @@ const Header = ({ setShowLogin }) => {
         { withCredentials: true }
       );
       dispatch(logout());
+      dispatch(clearCart());
       toast.success("Logged out successfully");
       setShowDropdown(false);
       navigate("/");
