@@ -78,7 +78,7 @@ const App = () => {
     };
 
     fetchCart();
-  }, [dispatch]);
+  }, [dispatch, user]); //added user here without user cart not syncing after using logut and logs in again
 
   return (
     <>

@@ -27,6 +27,7 @@ const DishCard = ({ id, name, price, desc, image }) => {
   // const [cartCount, setCartCount] = useState(0); //removed local state
   // Get cart items from Redux
   const { cartData } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
 
   // cart item that we added using addTocart
   const cartItem = cartData.find((item) => item.dish._id === id);
@@ -37,9 +38,14 @@ const DishCard = ({ id, name, price, desc, image }) => {
 
   // TODO: ADD TO CART HERE
   const handleAddToCart = async () => {
+    //blocking user from adding item in cart if not logged in
+    // TODO: adding guest add to cart for future
+    if (!user) {
+      return alert("Login to add dish to cart!");
+    }
     try {
-      console.log("add to cart");
-      console.log(id);
+      // console.log("add to cart");
+      // console.log(id);
 
       const res = await axios.post(
         `${backend_url}/api/v1/cart/add`,
