@@ -50,11 +50,33 @@ const DishCard = ({ id, name, price, desc, image }) => {
         { withCredentials: true }
       );
 
-      console.log(res);
+      // console.log(res);
 
       dispatch(setCart(res.data.data));
     } catch (error) {
       dispatch(clearCart());
+    }
+  };
+
+  // Remove single item from cart
+  const removeFromCart = async () => {
+    try {
+      const res = await axios.delete(
+        `${backend_url}/api/v1/cart/remove-single`,
+        {
+          data: { dishId: id },
+          withCredentials: true,
+        }
+      );
+
+      dispatch(
+        setCart({
+          cartData: res.data.data.cartData,
+          totalPrice: res.data.data.totalPrice,
+        })
+      );
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -85,7 +107,7 @@ const DishCard = ({ id, name, price, desc, image }) => {
             <img
               src={assets.remove_icon_red}
               alt="remove"
-              // onClick={removeFromCart}
+              onClick={removeFromCart}
               loading="lazy"
             />
 

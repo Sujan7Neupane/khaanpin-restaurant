@@ -26,7 +26,7 @@ const cartSlice = createSlice({
     // },
 
     clearCart(state) {
-      state.cartItems = [];
+      state.cartData = [];
       state.totalPrice = 0;
       state.cartId = null;
       state.error = null;
