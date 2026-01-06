@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { setCart, removeFromCart, setError } from "../../store/cartSlice";
+import { setCart, setError } from "../../store/cartSlice";
 import "../Cart/Cart.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import axios from "axios";
@@ -55,6 +55,37 @@ const CartPage = () => {
     fetchCartData();
   }, [dispatch]);
 
+  // Remove entire item from cart
+  const handleRemoveFromCart = async (dishId) => {
+    console.log(dishId);
+
+    try {
+      const res = await axios.delete(`${backend_url}/api/v1/cart/remove`, {
+        data: { dishId },
+        withCredentials: true,
+      });
+
+      // Update Redux with new cart returned from backend
+      dispatch(
+        setCart({
+          cartData: res.data.data.cartData,
+          totalPrice: res.data.data.totalPrice,
+        })
+      );
+    } catch (error) {
+      console.error(
+        "Failed to remove item:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
+  // Calculate total amount
+  const totalAmount = cartData.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
   return (
     <div className="cart-page">
       <h1>Your Cart</h1>
@@ -66,8 +97,8 @@ const CartPage = () => {
       ) : (
         <div className="cart-items">
           {/* mapping through cartItems  */}
-          {cartData.map((item) => (
-            <div className="cart-item" key={item.dish._id}>
+          {cartData.map((item, index) => (
+            <div className="cart-item" key={`${item.dish._id}-${index}`}>
               <img src={item.dish.image} alt={item.dish.name} />
               <div className="cart-info">
                 {/* Displaying other information */}
@@ -90,7 +121,7 @@ const CartPage = () => {
                   className="delete-icon"
                   // here it dispatches/sends the data to our store
                   // removeFromCart receives a parameter itemsId which is send through eeach item.id
-                  onClick={() => dispatch(removeFromCart(item.id))}
+                  onClick={() => handleRemoveFromCart(item.dish._id)}
                 />
               </div>
             </div>
@@ -102,7 +133,7 @@ const CartPage = () => {
       {/* Total and Proceed to Payment Section */}
       <div className="total-section">
         {/* displays total amount here */}
-        {/* <h2>Grand Total: ${totalAmount.toFixed(2)}</h2> */}
+        <h2>Grand Total: ${totalAmount.toFixed(2)}</h2>
 
         {/* Proceed to Payment button */}
         <button

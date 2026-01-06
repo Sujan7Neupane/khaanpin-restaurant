@@ -53,6 +53,8 @@ const App = () => {
     loadCurrentUser();
   }, []);
 
+  // load cart initially
+
   return (
     <>
       <ToastContainer

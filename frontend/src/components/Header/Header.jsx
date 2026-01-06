@@ -140,9 +140,9 @@ const Header = ({ setShowLogin }) => {
           />
           {/* Show count only if cart is not empty */}
           {/* TODO: add cartCOunt */}
-          {cartData.length > 0 && (
+          {/* {cartData.length > 0 && (
             <span className="cart-count">{cartData.length}</span>
-          )}
+          )} */}
         </div>
       </div>
 
