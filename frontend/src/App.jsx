@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { logout, setUser } from "./store/authSlice.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { setCart } from "./store/cartSlice.js";
 
 /**
  * App Component
@@ -54,6 +55,26 @@ const App = () => {
   }, []);
 
   // load cart initially
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const res = await axios.get(`${backend_url}/api/v1/cart/cart-data`, {
+          withCredentials: true,
+        });
+
+        dispatch(
+          setCart({
+            cartData: res.data.data.cartData,
+            totalPrice: res.data.data.totalPrice,
+          })
+        );
+      } catch (err) {
+        console.error("Failed to fetch cart:", err);
+      }
+    };
+
+    fetchCart();
+  }, [dispatch]);
 
   return (
     <>
