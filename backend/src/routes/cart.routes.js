@@ -4,7 +4,7 @@ import {
   getCartData,
   removeFromCart,
   removeSingleItemFromCart,
-} from "../controllers/cartController.js";
+} from "../controllers/cart.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = express();
