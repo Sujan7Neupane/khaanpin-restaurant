@@ -36,6 +36,7 @@ import userRouter from "./routes/user.routes.js";
 import menuRouter from "./routes/menu.routes.js";
 import dishRouter from "./routes/dish.route.js";
 import cartRouter from "./routes/cart.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 // for user login/registration
 app.use("/api/v1/user", userRouter);
@@ -48,5 +49,8 @@ app.use("/api/v1/dish", dishRouter);
 
 // cart route
 app.use("/api/v1/cart", cartRouter);
+
+// order route
+app.use("/api/v1/order", orderRouter);
 
 export { app };
