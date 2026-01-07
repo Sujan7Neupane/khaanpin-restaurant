@@ -32,4 +32,20 @@ const createOrder = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, order, "Order placed successfully!"));
 });
 
-export { createOrder };
+// to display orders in user profile
+// to fetch order info
+const fetchUserOrders = asyncHandler(async (req, res) => {
+  const userId = req.user?._id;
+
+  if (!userId) {
+    throw new ApiError(401, "User not authenticated");
+  }
+
+  const orders = await Order.find({ userId }).sort({ date: -1 });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, orders, "Orders fetched successfully"));
+});
+
+export { createOrder, fetchUserOrders };
