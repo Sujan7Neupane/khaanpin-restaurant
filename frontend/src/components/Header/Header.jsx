@@ -213,6 +213,18 @@ const Header = ({ setShowLogin }) => {
                     Profile
                   </button>
 
+                  <button
+                    className="dropdown-item"
+                    onClick={() => navigate("/my-orders")}
+                  >
+                    <img
+                      src={assets.order_icon}
+                      alt="orders"
+                      className="dropdown-icon"
+                    />
+                    Orders
+                  </button>
+
                   <button className="dropdown-item" onClick={handleLogout}>
                     <img
                       src={assets.logout_icon}

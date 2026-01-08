@@ -16,7 +16,7 @@ import {
   Contact,
   Profile,
 } from "./pages/index.js";
-import OrderDisplay from "./pages/DisplayOrder/OrderDisplay.jsx";
+import OrderDisplay from "./pages/OrderDisplay/OrderDisplay.jsx";
 
 // TODO: Lazy Load the pages for optimization
 // const HomePage = lazy(() => import("./pages/index.js"));

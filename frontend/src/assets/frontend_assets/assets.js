@@ -24,6 +24,7 @@ import email_icon1 from "./email.svg";
 import clock_icon from "./time.svg";
 import delete_icon from "./delete.svg";
 import dropdown_icon from "./arrow.svg";
+import order_icon from "./order.svg";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -71,6 +72,7 @@ export const assets = {
   clock_icon,
   delete_icon,
   dropdown_icon,
+  order_icon,
 
   rating_starts,
   add_icon_green,
