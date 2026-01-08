@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "../PlaceOrder/PlaceOrder.css";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const PlaceOrder = () => {
-  const [formData, setFormData] = useState({
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  // created reusable form state to clear form after placing order
+
+  const initialFormState = {
     firstName: "",
     lastName: "",
     email: "",
@@ -13,27 +18,80 @@ const PlaceOrder = () => {
     zipCode: "",
     country: "",
     phone: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const cartItems = useSelector((state) => state.cart.items);
+  const { cartData, totalPrice } = useSelector((state) => state.cart);
+  // const { user } = useSelector((state) => state.auth);
+  // console.log(cartData);
 
   // Example amounts
-  const subtotal = cartItems.reduce(
+  const subtotal = cartData.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
   const shippingFee = 15;
-  const total = subtotal + shippingFee;
 
-  const handleCheckout = () => {
-    console.log("Form Data:", formData);
-    console.log("Total Amount:", total);
-    alert("Proceeding to checkout...");
-    // Add your checkout logic here
+  // Checkout handler
+  const handleCheckout = async () => {
+    if (cartData.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    // Basic validation
+    for (const key in formData) {
+      if (!formData[key]) {
+        alert(`Please fill in your ${key}`);
+        return;
+      }
+    }
+
+    try {
+      // Prepare order payload
+      const payload = {
+        dishItems: cartData.map((item) => ({
+          dish: item.dish._id,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        deliveryFee: shippingFee,
+        address: {
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        paymentMethod: "cashOnDelivery",
+      };
+
+      const res = await axios.post(
+        `${backend_url}/api/v1/order/place`,
+        payload,
+        {
+          withCredentials: true,
+        }
+      );
+
+      alert("Order placed successfully!");
+      console.log(res.data);
+
+      // Optionally, redirect to order confirmation page
+      // TODO: redirect to orders page
+      // navigate("/");
+
+      //Clear form
+      setFormData(initialFormState);
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to place order");
+    }
   };
 
   return (
@@ -165,7 +223,7 @@ const PlaceOrder = () => {
         </div>
         <div className="summary-row total">
           <span>Total:</span>
-          <span>${total.toFixed(2)}</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
         <button className="checkout-btn" onClick={handleCheckout}>
           Proceed to Checkout
