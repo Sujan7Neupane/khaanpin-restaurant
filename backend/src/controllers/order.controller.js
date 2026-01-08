@@ -1,31 +1,65 @@
 import { Order } from "../models/order.models.js";
-import { User } from "../models/user.models.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
+import { Cart } from "../models/cart.models.js";
 
 // placing order on the basis of Cash On delivery
 const createOrder = asyncHandler(async (req, res) => {
-  const { userId, items, amount, address, paymentMethod, deliveryFee } =
-    req.body;
+  const userId = req.user?._id;
+  const { paymentMethod, deliveryFee, address } = req.body;
 
-  if (!userId || !items || !amount || !address) {
-    throw new ApiError(400, "Missing required fields");
+  // console.log(dishItems);
+
+  if (!userId) {
+    throw new ApiError(401, "User not authenticated");
   }
+
+  if (!address || !paymentMethod) {
+    throw new ApiError(400, "Address and payment method are required");
+  }
+
+  // Fetch user's cart
+  const cart = await Cart.findOne({ user: userId }).populate("cartData.dish");
+
+  if (!cart || cart.cartData.length === 0) {
+    throw new ApiError(400, "Cart is empty");
+  }
+
+  // fetching dish here directly
+  const dishItems = cart.cartData.map((item) => ({
+    dish: item.dish._id,
+    name: item.dish.name,
+    price: item.price,
+    quantity: item.quantity,
+  }));
+
+  // Calculating totalAmount here
+  const subtotal = dishItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  const totalAmount = subtotal + (deliveryFee || 0);
 
   // Create the order
   const order = await Order.create({
     userId,
-    items,
-    amount,
+    dishItems,
+    amount: totalAmount,
     address,
     paymentMethod,
-    payment: paymentMethod === "cashOnDelivery" ? false : null,
-    deliveryFee: deliveryFee,
+    payment: paymentMethod === "cashOnDelivery" ? false : true,
+    deliveryFee: deliveryFee || 0,
     date: Date.now(),
+    status: "Order Placed",
   });
 
-  await User.findByIdAndUpdate(userId, { cartData: [] });
+  // Clear cart correctly
+  await Cart.findOneAndUpdate(
+    { user: userId },
+    { cartData: [], totalPrice: 0 }
+  );
 
   return res
     .status(200)
