@@ -16,6 +16,7 @@ import {
   Contact,
   Profile,
 } from "./pages/index.js";
+import OrderDisplay from "./pages/DisplayOrder/OrderDisplay.jsx";
 
 // TODO: Lazy Load the pages for optimization
 // const HomePage = lazy(() => import("./pages/index.js"));
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "profile", element: <Profile /> },
+      { path: "my-orders", element: <OrderDisplay /> },
     ],
   },
 ]);

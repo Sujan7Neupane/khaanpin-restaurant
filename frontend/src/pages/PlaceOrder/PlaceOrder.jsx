@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import "../PlaceOrder/PlaceOrder.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router";
+import { clearCart } from "../../store/cartSlice";
 
 const PlaceOrder = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  // to navigate to specific page
+  const navigate = useNavigate();
+
+  // to clear cart after order placement
+  const dispatch = useDispatch();
 
   // created reusable form state to clear form after placing order
 
@@ -82,9 +90,11 @@ const PlaceOrder = () => {
       alert("Order placed successfully!");
       console.log(res.data);
 
+      dispatch(clearCart());
+
       // Optionally, redirect to order confirmation page
       // TODO: redirect to orders page
-      // navigate("/");
+      navigate("/my-orders");
 
       //Clear form
       setFormData(initialFormState);
