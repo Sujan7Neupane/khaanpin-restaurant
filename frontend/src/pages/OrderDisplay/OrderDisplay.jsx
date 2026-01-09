@@ -48,7 +48,7 @@ const OrderDisplay = () => {
             <div className="order-items">
               {order.dishItems.map((item) => (
                 <div className="order-item" key={item._id}>
-                  <img src={item.img} alt={item.name} />
+                  <img src={item.dish.image} alt={item.name} />
                   <div>
                     <p className="item-name">{item.name}</p>
                     <p className="item-meta">

@@ -75,7 +75,10 @@ const fetchUserOrders = asyncHandler(async (req, res) => {
     throw new ApiError(401, "User not authenticated");
   }
 
-  const orders = await Order.find({ userId }).sort({ date: -1 });
+  const orders = await Order.find({ userId }).sort({ date: -1 }).populate({
+    path: "dishItems.dish",
+    select: "name price image",
+  });
 
   return res
     .status(200)
