@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/OrderPage.css";
+import axios from "axios";
 
 const OrderPage = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get(`${backend_url}/api/v1/order/allOrders`);
+
+        setOrders(res.data.data);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) {
+    return <p className="loading">Loading orders...</p>;
+  }
+
   return (
     <div className="orders-page">
       <h2 className="title">All Orders</h2>
@@ -14,30 +39,48 @@ const OrderPage = () => {
       </div>
 
       <div className="orders-container">
-        <div className="order-row">
-          <img src="dish1.jpg" alt="Dish Image" className="order-image" />
-          <div className="order-items">
-            <p>
-              <span className="label-mobile">Name: </span>Pizza Margherita x 2 M
+        {orders.map((order) => (
+          <div className="order-row" key={order._id}>
+            <img
+              src={order.dishItems[0]?.dish?.image}
+              alt="Dish"
+              className="order-image"
+            />
+
+            {/* Dish items */}
+            <div className="order-items">
+              {order.dishItems.map((item) => (
+                <p key={item._id}>
+                  <span className="label-mobile">Name: </span>
+                  {item.name} x {item.quantity}
+                </p>
+              ))}
+            </div>
+
+            {/* Ordered by */}
+            <p className="order-customer">
+              <span className="label-mobile">Ordered By: </span>
+              {order.userId}
             </p>
-            <p>
-              <span className="label-mobile">Name: </span>Garlic Bread x 1 L
+
+            {/* Address */}
+            <p className="order-address">
+              <span className="label-mobile">Address: </span>
+              {order.address.street}, {order.address.city},{" "}
+              {order.address.state}
             </p>
+
+            {/* Status */}
+            <select className="order-status" defaultValue={order.status}>
+              <option>Order Placed</option>
+              <option>Accepted</option>
+              <option>Preparing</option>
+              <option>Ready</option>
+              <option>Out for Delivery</option>
+              <option>Delivered</option>
+            </select>
           </div>
-          <p className="order-customer">
-            <span className="label-mobile">Ordered By: </span>Junga Bahadur Rana
-          </p>
-          <p className="order-address">
-            <span className="label-mobile">Address: </span>123 Chabahil,
-            Kathmandu
-          </p>
-          <select className="order-status">
-            <option>Pending</option>
-            <option>Ready to ship</option>
-            <option>Shipped</option>
-            <option>Delivered</option>
-          </select>
-        </div>
+        ))}
       </div>
     </div>
   );
