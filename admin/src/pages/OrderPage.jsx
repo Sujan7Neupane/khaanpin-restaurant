@@ -23,6 +23,26 @@ const OrderPage = () => {
     fetchOrders();
   }, []);
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await axios.patch(`${backend_url}/api/v1/order/changeStatus`, {
+        orderId,
+        status: newStatus,
+      });
+
+      // Update local state to reflect change immediately
+      const updatedOrders = orders.map((order) =>
+        order._id === orderId ? { ...order, status: newStatus } : order
+      );
+      setOrders(updatedOrders);
+
+      alert("Order status updated!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update status");
+    }
+  };
+
   if (loading) {
     return <p className="loading">Loading orders...</p>;
   }
@@ -71,7 +91,11 @@ const OrderPage = () => {
             </p>
 
             {/* Status */}
-            <select className="order-status" defaultValue={order.status}>
+            <select
+              className="order-status"
+              value={order.status} // controlled component
+              onChange={(e) => handleStatusChange(order._id, e.target.value)}
+            >
               <option>Order Placed</option>
               <option>Accepted</option>
               <option>Preparing</option>
