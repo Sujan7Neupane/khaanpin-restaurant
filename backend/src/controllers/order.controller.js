@@ -97,4 +97,36 @@ const fetchAllOrderAdmin = asyncHandler(async (_req, res) => {
     .json(new ApiResponse(200, order, "All users order fetched successfully"));
 });
 
-export { createOrder, fetchUserOrders, fetchAllOrderAdmin };
+// to change the order status  of ordered items from admin panel
+const changeOrderStatus = asyncHandler(async (req, res) => {
+  const { orderId, status } = req.body;
+
+  // Validate input
+  if (!orderId || !status) {
+    res.status(400);
+    throw new Error("orderId and status are required");
+  }
+
+  // Find the order
+  const order = await Order.findById(orderId);
+  if (!order) {
+    res.status(404);
+    throw new ApiError("Order not found");
+  }
+
+  // Update status
+  order.status = status;
+  const updatedOrder = await order.save();
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { data: updatedOrder },
+        "Order status updated successfully"
+      )
+    );
+});
+
+export { createOrder, fetchUserOrders, fetchAllOrderAdmin, changeOrderStatus };

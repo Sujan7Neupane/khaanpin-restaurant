@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  changeOrderStatus,
   createOrder,
   fetchAllOrderAdmin,
   fetchUserOrders,
@@ -16,5 +17,8 @@ router.route("/userorders").get(verifyJWT, fetchUserOrders);
 
 // for the admin page fetch orders of all the users
 router.route("/allOrders").get(fetchAllOrderAdmin);
+
+// to change the delivery product status from admin page
+router.route("/changeStatus").patch(changeOrderStatus);
 
 export default router;

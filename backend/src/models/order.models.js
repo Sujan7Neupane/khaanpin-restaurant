@@ -55,6 +55,7 @@ const orderSchema = new mongoose.Schema(
         "Order Placed",
         "Accepted",
         "Preparing",
+        "Ready",
         "Out for Delivery",
         "Delivered",
         "Cancelled",
