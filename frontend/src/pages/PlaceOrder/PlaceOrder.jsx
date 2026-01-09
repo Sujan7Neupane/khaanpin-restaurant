@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { clearCart } from "../../store/cartSlice";
+import { toast } from "react-toastify";
 
 const PlaceOrder = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -48,14 +49,14 @@ const PlaceOrder = () => {
   // Checkout handler
   const handleCheckout = async () => {
     if (cartData.length === 0) {
-      alert("Your cart is empty!");
+      toast.error("Your cart is empty!");
       return;
     }
 
     // Basic validation
     for (const key in formData) {
       if (!formData[key]) {
-        alert(`Please fill in your ${key}`);
+        toast.error(`Please fill in your ${key}`);
         return;
       }
     }
@@ -87,7 +88,7 @@ const PlaceOrder = () => {
         }
       );
 
-      alert("Order placed successfully!");
+      toast.success("Order placed successfully!");
       console.log(res.data);
 
       dispatch(clearCart());
@@ -100,7 +101,7 @@ const PlaceOrder = () => {
       setFormData(initialFormState);
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.message || "Failed to place order");
+      toast.error(err.response?.data?.message || "Failed to place order");
     }
   };
 
