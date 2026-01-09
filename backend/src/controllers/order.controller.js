@@ -85,4 +85,16 @@ const fetchUserOrders = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, orders, "Orders fetched successfully"));
 });
 
-export { createOrder, fetchUserOrders };
+// fetching all the order in admin page
+const fetchAllOrderAdmin = asyncHandler(async (_req, res) => {
+  const order = await Order.find({}).populate({
+    path: "dishItems.dish",
+    select: "name price image",
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, order, "All users order fetched successfully"));
+});
+
+export { createOrder, fetchUserOrders, fetchAllOrderAdmin };
