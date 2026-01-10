@@ -1,11 +1,14 @@
-import { User } from "../models/user.models";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import asyncHandler from "../utils/asyncHandler";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import asyncHandler from "../utils/asyncHandler.js";
+import jwt from "jsonwebtoken";
 
 const adminLogin = asyncHandler(async (req, res) => {
   // request from body
   const { email, password } = req.body;
+
+  const envEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase() || "";
+  const envPassword = process.env.ADMIN_PASSWORD?.trim() || "";
 
   //   checks for email and password
   if (!email || !password) {
@@ -16,28 +19,18 @@ const adminLogin = asyncHandler(async (req, res) => {
   // we will be using the email and pass created manually
   // TODO: future make super-admin
   if (
-    email !== process.env.ADMIN_EMAIL ||
-    password !== process.env.ADMIN_PASSWORD
+    email.trim().toLowerCase() !== envEmail ||
+    password.trim() !== envPassword
   ) {
     throw new ApiError(401, "Invalid admin credentials");
   }
 
   // Generate JWT token
-  const adminPayload = {
-    email,
-    role: "admin",
-  };
+  const adminPayload = { email: envEmail, role: "admin" };
 
-  const accessToken = jwt.sign(adminPayload, process.env.JWT_SECRET, {
+  const accessToken = jwt.sign(adminPayload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "1d",
   });
-
-  //   checks password validation
-  const isPasswordValid = await admin.isPasswordCorrect(password);
-
-  if (!isPasswordValid) {
-    throw new ApiError(401, "Invalid credentials");
-  }
 
   // Cookie options
   const cookieOptions = {
@@ -53,7 +46,7 @@ const adminLogin = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { email, role: "admin" },
+        { email: envEmail, role: "admin" },
         "Admin logged in successfully"
       )
     );

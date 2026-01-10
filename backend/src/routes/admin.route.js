@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { verifyAdmin } from "../middlewares/admin.middleware";
+import { verifyAdmin } from "../middlewares/admin.middleware.js";
 import {
   adminDashboard,
   adminLogin,
   adminLogout,
-} from "../controllers/admin.controller";
+} from "../controllers/admin.controller.js";
 
 const router = Router();
 
