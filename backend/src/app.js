@@ -37,9 +37,13 @@ import menuRouter from "./routes/menu.routes.js";
 import dishRouter from "./routes/dish.route.js";
 import cartRouter from "./routes/cart.routes.js";
 import orderRouter from "./routes/order.routes.js";
+import adminRouter from "./routes/admin.route.js";
 
 // for user login/registration
 app.use("/api/v1/user", userRouter);
+
+// for admin login/logout
+app.use("/api/v1/admin", adminRouter);
 
 // menu lists
 app.use("/api/v1/menu", menuRouter);
