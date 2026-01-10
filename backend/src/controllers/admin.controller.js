@@ -71,4 +71,16 @@ const adminLogin = asyncHandler(async (req, res) => {
     );
 });
 
-export { adminLogin };
+const adminLogout = asyncHandler(async (_req, res) => {
+  res
+    .status(200)
+    .clearCookie("adminAccessToken")
+    .clearCookie("adminRefreshToken")
+    .json(new ApiResponse(200, null, "Admin logged out successfully"));
+});
+
+const adminDashboard = asyncHandler(async () => {
+  res.json({ message: `Welcome admin ${req.admin.username}` });
+});
+
+export { adminLogin, adminLogout, adminDashboard };

@@ -1,14 +1,17 @@
 import { Router } from "express";
-import { adminLogin } from "../controllers/admin.controller/js";
-import { AdminLogin } from "../../../admin/src/pages";
 import { verifyAdmin } from "../middlewares/admin.middleware";
+import {
+  adminDashboard,
+  adminLogin,
+  adminLogout,
+} from "../controllers/admin.controller";
 
 const router = Router();
 
-router.route("/login").post(AdminLogin);
+router.route("/login").post(adminLogin);
 
-router.get("/dashboard", verifyAdmin, (req, res) => {
-  res.json({ message: `Welcome admin ${req.admin.username}` });
-});
+router.route("/logout").post(verifyAdmin, adminLogout);
+
+router.get("/dashboard", verifyAdmin, adminDashboard);
 
 export default router;
