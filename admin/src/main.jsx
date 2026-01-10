@@ -7,15 +7,15 @@ import { store } from "./store/store.js";
 import { AddDish, AdminDashboard, ListDish, OrderPage } from "./pages/index.js";
 
 import App from "./App.jsx";
-// import { AdminLogin } from "./components/index.js";
+import { AdminLogin } from "./pages/index.js";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/admin-login",
-  //   element: <AdminLogin />,
-  // },
+  {
+    path: "/admin-login",
+    element: <AdminLogin />,
+  },
   {
     path: "/",
     element: <App />,
