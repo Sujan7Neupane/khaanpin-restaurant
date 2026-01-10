@@ -2,5 +2,6 @@
 
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import ProtectedRoute from "./ProtectedRoute";
 
-export { Navbar, Sidebar };
+export { Navbar, Sidebar, ProtectedRoute };

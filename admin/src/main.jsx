@@ -10,20 +10,34 @@ import App from "./App.jsx";
 import { AdminLogin } from "./pages/index.js";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
     path: "/admin-login",
-    element: <AdminLogin />,
+    element: (
+      <>
+        <ToastContainer />
+        <AdminLogin />
+      </>
+    ),
   },
   {
     path: "/",
-    element: <App />,
+    element: <ProtectedRoute />,
     children: [
-      { index: true, element: <AdminDashboard /> },
-      { path: "add", element: <AddDish /> },
-      { path: "list", element: <ListDish /> },
-      { path: "order", element: <OrderPage /> },
+      {
+        path: "/",
+        element: <App />,
+        children: [
+          { index: true, element: <AdminDashboard /> },
+          { path: "dashboard", element: <AdminDashboard /> },
+          { path: "add", element: <AddDish /> },
+          { path: "list", element: <ListDish /> },
+          { path: "order", element: <OrderPage /> },
+        ],
+      },
     ],
   },
 ]);
