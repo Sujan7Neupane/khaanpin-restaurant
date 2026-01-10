@@ -13,7 +13,7 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
 
   let decodedToken;
   try {
-    decodedToken = jwt.verify(adminToken, process.env.ACCESS_TOKEN_SECRET);
+    decodedToken = jwt.verify(adminToken, process.env.JWT_ADMIN_SECRET);
   } catch (err) {
     throw new ApiError(401, "Invalid or expired token");
   }

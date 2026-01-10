@@ -28,7 +28,7 @@ const adminLogin = asyncHandler(async (req, res) => {
   // Generate JWT token
   const adminPayload = { email: envEmail, role: "admin" };
 
-  const accessToken = jwt.sign(adminPayload, process.env.ACCESS_TOKEN_SECRET, {
+  const accessToken = jwt.sign(adminPayload, process.env.JWT_ADMIN_SECRET, {
     expiresIn: "1d",
   });
 
@@ -55,7 +55,11 @@ const adminLogin = asyncHandler(async (req, res) => {
 const adminLogout = asyncHandler(async (_req, res) => {
   res
     .status(200)
-    .clearCookie("adminAccessToken")
+    .clearCookie("adminAccessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    })
     .json(new ApiResponse(200, null, "Admin logged out successfully"));
 });
 
