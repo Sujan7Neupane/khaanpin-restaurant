@@ -98,12 +98,22 @@ const userLogin = asyncHandler(async (req, res) => {
     throw new ApiError(400, "username or email is required");
   }
 
+  if (!password) {
+    throw new ApiError(400, "Password is required");
+  }
+
   const user = await User.findOne({
     $or: [{ username }, { email }],
   });
 
   if (!user) {
     throw new ApiError(404, "User does not exist");
+  }
+
+  // Very Important
+  // Prevent admins logging in via user login
+  if (user.role !== "user") {
+    throw new ApiError(403, "Invalid login route");
   }
 
   const isPasswordValid = await user.isPasswordCorrect(password);
@@ -134,8 +144,6 @@ const userLogin = asyncHandler(async (req, res) => {
         200,
         {
           user: loggedInUser,
-          accessToken,
-          refreshToken,
         },
         "User logged In Successfully"
       )
