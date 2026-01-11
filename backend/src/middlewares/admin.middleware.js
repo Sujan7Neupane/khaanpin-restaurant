@@ -4,11 +4,10 @@ import jwt from "jsonwebtoken";
 
 export const verifyAdmin = asyncHandler(async (req, res, next) => {
   // Get token from Authorization header or cookie
-  const adminToken =
-    req.headers.authorization?.split(" ")[1] || req.cookies?.adminAccessToken;
+  const { adminRefreshToken } = req.cookies;
 
-  if (!adminToken) {
-    throw new ApiError(401, "No token provided");
+  if (!adminRefreshToken) {
+    throw new ApiError(401, "Unauthorized request");
   }
 
   let decodedToken;
@@ -18,11 +17,19 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "Invalid or expired token");
   }
 
+  const admin = await User.findById(decodedToken._id).select(
+    "-password -refreshToken"
+  );
+
+  if (!admin) {
+    throw new ApiError(401, "Admin no longer exists");
+  }
+
   // Check role
-  if (decodedToken.role !== "admin") {
+  if (admin.role !== "admin") {
     throw new ApiError(403, "Admin access only");
   }
 
-  req.admin = decodedToken;
+  req.user = admin;
   next();
 });
