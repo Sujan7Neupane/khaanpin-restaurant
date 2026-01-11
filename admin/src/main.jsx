@@ -25,19 +25,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <ProtectedRoute />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: [
-      {
-        path: "/",
-        element: <App />,
-        children: [
-          { index: true, element: <AdminDashboard /> },
-          { path: "dashboard", element: <AdminDashboard /> },
-          { path: "add", element: <AddDish /> },
-          { path: "list", element: <ListDish /> },
-          { path: "order", element: <OrderPage /> },
-        ],
-      },
+      { index: true, element: <AdminDashboard /> },
+      { path: "dashboard", element: <AdminDashboard /> },
+      { path: "add", element: <AddDish /> },
+      { path: "list", element: <ListDish /> },
+      { path: "order", element: <OrderPage /> },
     ],
   },
 ]);

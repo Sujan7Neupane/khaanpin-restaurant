@@ -67,4 +67,11 @@ const adminDashboard = asyncHandler(async () => {
   res.json({ message: `Welcome admin ${req.admin.username}` });
 });
 
-export { adminLogin, adminLogout, adminDashboard };
+// to fetch the current user to persist the login page
+const getCurrentAdmin = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "Current admin fetched successfully"));
+});
+
+export { adminLogin, adminLogout, adminDashboard, getCurrentAdmin };

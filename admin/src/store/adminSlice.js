@@ -6,6 +6,7 @@ const initialState = {
   isLoggedIn: false,
   user: null,
   currency: "$",
+  loading: true,
 };
 
 const adminSlice = createSlice({
@@ -16,17 +17,23 @@ const adminSlice = createSlice({
     login: (state, action) => {
       state.isLoggedIn = true;
       state.user = action.payload;
+      state.loading = false;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = null;
+      state.loading = false;
     },
     setAuthState: (state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn;
       state.user = action.payload.user;
+      state.loading = false;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { login, logout, setAuthState } = adminSlice.actions;
+export const { login, logout, setAuthState, setLoading } = adminSlice.actions;
 export default adminSlice.reducer;
