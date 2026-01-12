@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 
-const menuSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const menuSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+    },
   },
-  image: {
-    type: string,
-  },
-});
+  { timestamps: true }
+);
 
 export const Menu = mongoose.model("Menu", menuSchema);
 
