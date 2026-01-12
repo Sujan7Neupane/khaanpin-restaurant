@@ -31,7 +31,7 @@ const HomePage = () => {
    * Tracks the currently selected menu category
    * Default: "All" to show all dishes
    */
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
 
   // for the bottom bar and whatsapp position issue
   const [showBar, setShowBar] = useState(false);

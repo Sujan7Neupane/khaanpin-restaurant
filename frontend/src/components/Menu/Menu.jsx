@@ -1,6 +1,8 @@
 import React from "react";
 import "../Menu/Menu.css";
-import { assets } from "../../assets/frontend_assets/assets";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 /**
  * Menu items array
@@ -10,16 +12,6 @@ import { assets } from "../../assets/frontend_assets/assets";
  * - name: the dish/category name
  * - image: image representing the dish
  */
-
-// Will be implemented using backend
-const menuItems = [
-  { name: "Pizza", image: assets.pizza_img },
-  { name: "Momo", image: assets.momo_img },
-  { name: "Chowmein", image: assets.chowmein_img },
-  { name: "Momo", image: assets.momo_img },
-  { name: "Chowmein", image: assets.chowmein_img },
-  { name: "Pizza", image: assets.pizza_img },
-];
 
 /**
  * Menu Component
@@ -31,6 +23,14 @@ const menuItems = [
  * @param {Function} setCategory - Function to update selected category
  */
 const Menu = ({ category, setCategory }) => {
+  console.log("menu", category);
+
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  // fetched menus from backend
+  const [menuItems, setMenuItems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   /**
    * Handles click on a menu item
    * - If the clicked category is already selected, resets to "All"
@@ -38,9 +38,45 @@ const Menu = ({ category, setCategory }) => {
    *
    * @param {string} name - Name of the clicked menu category
    */
+
+  // Fetch menu items from backend
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${backend_url}/api/v1/menu/list`);
+
+        console.log("Menu", response.data.data);
+
+        setMenuItems(response.data?.data || []);
+      } catch (err) {
+        setError("Failed to load menu items");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenu();
+  }, []);
+
   const handleClick = (name) => {
-    setCategory((prev) => (prev === name ? "All" : name));
+    console.log("menu", name.toLowerCase());
+
+    console.log(name.toLowerCase() ? "all" : name);
+
+    setCategory((prev) =>
+      prev === name.toLowerCase() ? "all" : name.toLowerCase()
+    );
   };
+
+  if (loading) {
+    return <p className="menu-loading">Loading menu...</p>;
+  }
+
+  if (error) {
+    return <p className="menu-error">{error}</p>;
+  }
 
   return (
     <div className="standard-padding container">
@@ -65,7 +101,7 @@ const Menu = ({ category, setCategory }) => {
             {/* red border for user interaction  */}
             <div
               className={`image-wrapper ${
-                category === item.name ? "selected" : ""
+                category === item.name.toLowerCase() ? "selected" : ""
               }`}
             >
               <img src={item.image} alt={item.name} loading="lazy" />

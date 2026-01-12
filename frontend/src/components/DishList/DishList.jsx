@@ -15,6 +15,8 @@ import {
 // const dishesList = [];
 
 const DishList = ({ category }) => {
+  console.log("dishesList", category);
+
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   const dispatch = useDispatch();
 
@@ -22,19 +24,20 @@ const DishList = ({ category }) => {
   const { dishes, loading, error } = useSelector((state) => state.dish);
 
   useEffect(() => {
-    try {
-      dispatch(fetchDishStart());
-      const fetchDishList = async () => {
+    const fetchDishList = async () => {
+      try {
+        dispatch(fetchDishStart());
         const response = await axios.get(`${backend_url}/api/v1/dish/list`);
 
-        // sending data to store
-        // console.log(response.data?.data?.dishes);
+        console.log("DishList", response.data.data.dishes);
+
         dispatch(fetchDishSuccess(response.data?.data?.dishes));
-      };
-      fetchDishList();
-    } catch (error) {
-      dispatch(fetchDishError(err.message));
-    }
+      } catch (err) {
+        dispatch(fetchDishError(err.message));
+      }
+    };
+
+    fetchDishList();
   }, [dispatch]);
 
   // if no items in the list
@@ -66,7 +69,7 @@ const DishList = ({ category }) => {
       <div className="dish-list">
         {dishes.map((item, index) => {
           // Display food according to the menu
-          if (category === "All" || category === item.category) {
+          if (category === "all" || category === item.category.toLowerCase()) {
             return (
               // display card here
               <DishCard

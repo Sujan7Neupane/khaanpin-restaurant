@@ -23,6 +23,8 @@ const AddDish = () => {
     category: "Appetizers & Snack",
   });
 
+  const [categories, setCategories] = useState([]);
+
   // Step:1 making controlled field taking events from input fields
   const handleChange = (e) => {
     // name comes from name="" in input field
@@ -79,7 +81,7 @@ const AddDish = () => {
           dish_name: "",
           description: "",
           price: "",
-          category: "Appetizers & Snack",
+          category: "",
         });
         setUploadImage(false);
         // toastify message for success
@@ -88,12 +90,26 @@ const AddDish = () => {
       }
     } catch (error) {
       // toastify message for error
-      toast.error(response.data.message);
+      toast.error(error);
     } finally {
       // Step 3: stop loading
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${backend_url}/api/v1/menu/list`);
+
+        setCategories(response.data?.data || []);
+      } catch (error) {
+        toast.error("Failed to load categories");
+      }
+    };
+
+    fetchCategories();
+  }, [backend_url]);
 
   return (
     <div className="add-dish">
@@ -156,15 +172,20 @@ const AddDish = () => {
         <div className="row">
           <div className="field">
             <p className="label">Dish Category</p>
-            <select onChange={handleChange} name="category">
-              <option value="Appetizers">Appetizers & Snack</option>
-              <option value="Dessert">Dessert</option>
-              <option value="Main_dish">Main Dishes</option>
-              <option value="Side_dish">Side Dishes</option>
-              <option value="Breakfast">Breakfast</option>
-              <option value="Beverages">Beverages</option>
-              <option value="Salads">Salads</option>
-              <option value="Sauce">Sauce and Marinades</option>
+
+            <select
+              name="category"
+              value={data.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Category</option>
+
+              {categories.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
           </div>
 

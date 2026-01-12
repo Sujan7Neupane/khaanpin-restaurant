@@ -20,12 +20,12 @@ const BottomBar = ({ showBar }) => {
 
   // Get cart items from Redux
   const { cartData, totalPrice } = useSelector((state) => state.cart);
-  console.log(totalPrice);
+  // console.log(totalPrice);
 
   // to set total cart items with quantity
   const totalQuantity = useSelector(selectTotalQuantity);
 
-  console.log(cartData);
+  // console.log(cartData);
 
   return (
     /**
