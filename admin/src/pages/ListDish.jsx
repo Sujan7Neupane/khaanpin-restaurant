@@ -84,7 +84,7 @@ const ListDish = () => {
                   className="product-image"
                 />
                 <p className="product-name">{dish.name}</p>
-                <p className="product-category">{dish.category}</p>
+                <p className="product-category">{dish.name}</p>
                 <p className="product-price">${dish.price.toFixed(2)}</p>
                 <div className="product-action">
                   <img

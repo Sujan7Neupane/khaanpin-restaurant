@@ -72,7 +72,10 @@ const AddDish = () => {
       const response = await axios.post(
         `${backend_url}/api/v1/dish/add`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true, // IMPORTANT: send JWT cookie automatically
+        }
       );
 
       if (response.data.success) {
