@@ -27,6 +27,13 @@ const Sidebar = () => {
         </li>
 
         <li>
+          <NavLink to={"/list-menu"}>
+            <span>List Menu</span>
+            <img src={assets.list_dish} className="icon-img" />
+          </NavLink>
+        </li>
+
+        <li>
           <NavLink to={"/list"}>
             <span>List Dish</span>
             <img src={assets.list_dish} className="icon-img" />

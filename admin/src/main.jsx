@@ -18,6 +18,7 @@ import { AdminLogin } from "./pages/index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { ToastContainer } from "react-toastify";
+import ListMenu from "./pages/ListMenu.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: "add", element: <AddDish /> },
       { path: "add-menu", element: <AddMenu /> },
       { path: "list", element: <ListDish /> },
+      { path: "list-menu", element: <ListMenu /> },
       { path: "order", element: <OrderPage /> },
     ],
   },

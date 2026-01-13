@@ -1,0 +1,126 @@
+.menu-list {
+  padding: 32px 40px;
+}
+
+.menu-title {
+  margin-bottom: 16px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Container */
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Header (desktop only) */
+.menu-header {
+  display: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: #e0ffed;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.menu-header .text-center .menu-header span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-header .text-center {
+  text-align: center;
+}
+
+/* Menu row */
+.menu-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  position: relative;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 12px;
+}
+
+/* Image */
+.menu-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Text */
+.menu-row p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Delete icon (mobile) */
+.menu-delete-icon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+/* ===== Desktop layout ===== */
+@media (min-width: 768px) {
+  .menu-header {
+    display: grid;
+  }
+
+  .menu-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .menu-delete-icon {
+    position: static;
+  }
+
+  .menu-action {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 480px) {
+  .menu-list {
+    padding: 16px;
+  }
+
+  .menu-row {
+    padding: 12px;
+  }
+
+  .menu-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .menu-row p {
+    font-size: 13px;
+  }
+
+  .menu-delete-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
