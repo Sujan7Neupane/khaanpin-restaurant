@@ -6,6 +6,7 @@ import profile_image from "./profile-circle.svg";
 import upload_area from "./upload_area.png";
 import dashboard from "./dashboard.svg";
 import close_icon from "./close.svg";
+import menu_icon from "./menu.svg";
 
 export const assets = {
   logo,
@@ -16,6 +17,7 @@ export const assets = {
   upload_area,
   dashboard,
   close_icon,
+  menu_icon,
 };
 
 export const url = "http://localhost:8000";

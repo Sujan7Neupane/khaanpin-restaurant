@@ -20,6 +20,13 @@ const Sidebar = () => {
         </li>
 
         <li>
+          <NavLink to={"/add-menu"}>
+            <span>Add New Menu</span>
+            <img src={assets.menu_icon} className="icon-img" />
+          </NavLink>
+        </li>
+
+        <li>
           <NavLink to={"/list"}>
             <span>List Dish</span>
             <img src={assets.list_dish} className="icon-img" />

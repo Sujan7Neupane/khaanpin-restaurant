@@ -4,7 +4,13 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 
-import { AddDish, AdminDashboard, ListDish, OrderPage } from "./pages/index.js";
+import {
+  AddDish,
+  AddMenu,
+  AdminDashboard,
+  ListDish,
+  OrderPage,
+} from "./pages/index.js";
 
 import App from "./App.jsx";
 import { AdminLogin } from "./pages/index.js";
@@ -34,6 +40,7 @@ const router = createBrowserRouter([
       { index: true, element: <AdminDashboard /> },
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "add", element: <AddDish /> },
+      { path: "add-menu", element: <AddMenu /> },
       { path: "list", element: <ListDish /> },
       { path: "order", element: <OrderPage /> },
     ],
