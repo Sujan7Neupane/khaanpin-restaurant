@@ -32,7 +32,7 @@ const addDish = asyncHandler(async (req, res) => {
 
   // creating object structure and adding to mongoDB database
   const dish = await Dish.create({
-    name,
+    name: name.toLowerCase(),
     desc,
     price,
     category,

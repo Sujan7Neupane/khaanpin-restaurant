@@ -10,7 +10,7 @@ const getCartData = asyncHandler(async (req, res) => {
   // currently logged in user's id
   const userId = req.user?._id;
 
-  console.log(userId);
+  // console.log(userId);
 
   //   no user = not authorized to add to cart
   if (!userId) {

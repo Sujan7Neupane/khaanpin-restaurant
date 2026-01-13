@@ -6,7 +6,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import deleteFromCloudinary from "../utils/deletefromCloudinary.js";
 
 const addMenu = asyncHandler(async (req, res) => {
-  const { name, image } = req.body;
+  const { name } = req.body;
 
   if (!name) {
     res.status(400);
@@ -26,7 +26,10 @@ const addMenu = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Image upload failed!");
   }
 
-  const menu = await Menu.create({ name, image: uploadedImage.secure_url });
+  const menu = await Menu.create({
+    name: name.toLowerCase(),
+    image: uploadedImage.secure_url,
+  });
 
   return res
     .status(200)
