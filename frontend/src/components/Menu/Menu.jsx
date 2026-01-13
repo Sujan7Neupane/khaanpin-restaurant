@@ -23,7 +23,7 @@ import axios from "axios";
  * @param {Function} setCategory - Function to update selected category
  */
 const Menu = ({ category, setCategory }) => {
-  console.log("menu", category);
+  // console.log("menu", category);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   // fetched menus from backend
@@ -46,7 +46,7 @@ const Menu = ({ category, setCategory }) => {
         setLoading(true);
         const response = await axios.get(`${backend_url}/api/v1/menu/list`);
 
-        console.log("Menu", response.data.data);
+        // console.log("Menu", response.data.data);
 
         setMenuItems(response.data?.data || []);
       } catch (err) {
@@ -61,9 +61,9 @@ const Menu = ({ category, setCategory }) => {
   }, []);
 
   const handleClick = (name) => {
-    console.log("menu", name.toLowerCase());
+    // console.log("menu", name.toLowerCase());
 
-    console.log(name.toLowerCase() ? "all" : name);
+    // console.log(name.toLowerCase() ? "all" : name);
 
     setCategory((prev) =>
       prev === name.toLowerCase() ? "all" : name.toLowerCase()

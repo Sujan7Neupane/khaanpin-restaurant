@@ -15,7 +15,7 @@ import {
 // const dishesList = [];
 
 const DishList = ({ category }) => {
-  console.log("dishesList", category);
+  // console.log("dishesList", category);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const DishList = ({ category }) => {
         dispatch(fetchDishStart());
         const response = await axios.get(`${backend_url}/api/v1/dish/list`);
 
-        console.log("DishList", response.data.data.dishes);
+        // console.log("DishList", response.data.data.dishes);
 
         dispatch(fetchDishSuccess(response.data?.data?.dishes));
       } catch (err) {
@@ -69,7 +69,10 @@ const DishList = ({ category }) => {
       <div className="dish-list">
         {dishes.map((item, index) => {
           // Display food according to the menu
-          if (category === "all" || category === item.category.toLowerCase()) {
+          console.log("Item category", item);
+          console.log("Item", item.name);
+          //  cccccc    =====
+          if (category === "all" || category === item.name.toLowerCase()) {
             return (
               // display card here
               <DishCard
