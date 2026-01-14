@@ -7,6 +7,8 @@ import upload_area from "./upload_area.png";
 import dashboard from "./dashboard.svg";
 import close_icon from "./close.svg";
 import menu_icon from "./menu.svg";
+import dish_icon from "./dish.png";
+import add_menu_icon from "./add_menu.png";
 
 export const assets = {
   logo,
@@ -18,6 +20,8 @@ export const assets = {
   dashboard,
   close_icon,
   menu_icon,
+  dish_icon,
+  add_menu_icon,
 };
 
 export const url = "http://localhost:8000";

@@ -33,6 +33,7 @@ const ListMenu = () => {
     try {
       const response = await axios.delete(`${backend_url}/api/v1/menu/delete`, {
         data: { id },
+        withCredentials: true,
       });
 
       if (response.data.success) {
@@ -43,7 +44,7 @@ const ListMenu = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Error deleting menu item");
+      toast.error("Unauthorized or session expired");
     }
   };
 
