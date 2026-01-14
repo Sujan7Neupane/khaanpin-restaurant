@@ -12,6 +12,15 @@ const addMenu = asyncHandler(async (req, res) => {
     res.status(400);
     throw new ApiError("Menu name is required");
   }
+  if (!name) {
+    throw new ApiError(400, "Menu name is required");
+  }
+
+  // Check if menu already exists
+  const existingMenu = await Menu.findOne({ name: name.toLowerCase() });
+  if (existingMenu) {
+    throw new ApiError(409, "Menu with this name already exists");
+  }
 
   const imageLocalPath = req.file?.path;
 

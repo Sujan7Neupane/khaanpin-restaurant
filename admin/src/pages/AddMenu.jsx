@@ -23,29 +23,36 @@ const AddMenu = () => {
 
     try {
       const formData = new FormData();
-      formData.append("name", name);
+      formData.append("name", name.trim());
       formData.append("image", image);
 
-      // Send request with cookie
       const response = await axios.post(
         `${backend_url}/api/v1/menu/add`,
         formData,
         {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true, // IMPORTANT: send JWT cookie automatically
+          withCredentials: true,
         }
       );
 
-      if (response.data.success) {
-        toast.success("Menu added successfully!");
-        setName("");
-        setImage(null);
-      } else {
-        toast.error(response.data.message || "Failed to add menu");
-      }
+      console.log(response);
+
+      toast.success(response.data.message);
+      setName("");
+      setImage(null);
     } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Something went wrong!");
+      const status = err.response?.status;
+      const message = err.response?.data?.message;
+
+      if (status === 409) {
+        // Duplicate menu name
+        toast.error("Menu with this name already exists");
+      } else if (status === 400) {
+        toast.error(message || "Invalid input");
+      } else if (status === 401 || status === 403) {
+        toast.error("You are not authorized to perform this action");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
