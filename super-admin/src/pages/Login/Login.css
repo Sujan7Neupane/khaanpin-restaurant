@@ -91,6 +91,13 @@
   background: #1d4ed8;
 }
 
+.error-text {
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .login-left {
@@ -105,14 +112,45 @@
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
+    min-height: 100vh;
   }
 
   .login-left {
+    flex: none;
+    padding: 28px 20px;
     text-align: center;
     align-items: center;
   }
 
+  .login-left h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
   .login-left p {
-    max-width: none;
+    font-size: 14px;
+    max-width: 320px;
+  }
+
+  .login-right {
+    flex: 1;
+    align-items: flex-start;
+    padding: 30px 16px 40px;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .login-left::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #2563eb;
+    border-radius: 2px;
+    margin-top: 16px;
   }
 }
