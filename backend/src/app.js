@@ -38,12 +38,16 @@ import dishRouter from "./routes/dish.route.js";
 import cartRouter from "./routes/cart.routes.js";
 import orderRouter from "./routes/order.routes.js";
 import adminRouter from "./routes/admin.route.js";
+import superadminRouter from "./routes/superadmin.route.js";
 
 // for user login/registration
 app.use("/api/v1/user", userRouter);
 
 // for admin login/logout
 app.use("/api/v1/admin", adminRouter);
+
+// for superadmin login/logout
+app.use("/api/v1/superadmin", superadminRouter);
 
 // menu lists
 app.use("/api/v1/menu", menuRouter);

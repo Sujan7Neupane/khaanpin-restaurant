@@ -1,5 +1,8 @@
-import asyncHandler from "../utils/asyncHandler";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import asyncHandler from "../utils/asyncHandler.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const superadminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -8,8 +11,13 @@ const superadminLogin = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Email and password are required");
   }
 
+  const SUPERADMIN_PASSWORD_HASH = await bcrypt.hash(
+    process.env.SUPERADMIN_PASSWORD,
+    12
+  );
+
   const envEmail = process.env.SUPERADMIN_EMAIL?.toLowerCase().trim();
-  const envPasswordHash = process.env.SUPERADMIN_PASSWORD_HASH;
+  const envPasswordHash = SUPERADMIN_PASSWORD_HASH;
 
   if (!envEmail || !envPasswordHash) {
     throw new ApiError(500, "Superadmin not configured");
@@ -28,7 +36,7 @@ const superadminLogin = asyncHandler(async (req, res) => {
   };
 
   const accessToken = jwt.sign(payload, process.env.JWT_ADMIN_SECRET, {
-    expiresIn: "15m", // ⬅️ shorter
+    expiresIn: "15m",
   });
 
   res.cookie("superadminAccessToken", accessToken, {
@@ -64,7 +72,9 @@ const superadminLogout = asyncHandler(async (req, res) => {
 const getCurrentSuperAdmin = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(new ApiResponse(200, req.user, "Current admin fetched successfully"));
+    .json(
+      new ApiResponse(200, req.user, "Current super admin fetched successfully")
+    );
 });
 
 export { superadminLogin, superadminLogout, getCurrentSuperAdmin };
