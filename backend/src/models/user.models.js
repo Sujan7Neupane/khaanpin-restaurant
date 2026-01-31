@@ -24,16 +24,42 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
 
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "superadmin"],
       default: "user",
+      index: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["active", "invited", "disabled"],
+      default: "active",
+      index: true,
     },
 
     refreshToken: {
       type: String,
+      select: false,
+    },
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+
+    invitedAt: {
+      type: Date,
+      default: null,
+    },
+
+    lastLoginAt: {
+      type: Date,
+      default: null,
     },
   },
   {
