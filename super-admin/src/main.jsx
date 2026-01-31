@@ -14,10 +14,11 @@ import {
 } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Login from "./pages/Login/Login.jsx";
 import { SuperadminProtectedRoute } from "./components/SuperAdminProtectedRoutes.jsx";
 import LoginProtectedRoute from "./components/LoginProtectedWrapper.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Users from "./pages/Users/Users.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,10 @@ const router = createBrowserRouter([
         <App />
       </SuperadminProtectedRoute>
     ),
-    children: [{ index: true, element: <Dashboard /> }],
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "users", element: <Users /> },
+    ],
   },
   {
     path: "*",

@@ -1,16 +1,44 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "../../store/superadminSlice";
+import axios from "axios";
 import "./Header.css";
 
+const backend_url = import.meta.env.VITE_BACKEND_URL;
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${backend_url}/api/v1/superadmin/logout`,
+        {},
+        { withCredentials: true },
+      );
+
+      dispatch(logoutAction());
+
+      // 3️⃣ Redirect to login
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error(
+        "Logout failed:",
+        err.response?.data?.message || err.message,
+      );
+    }
+  };
+
   return (
     <header className="admin-header">
       <h1 className="logo">SuperAdmin</h1>
 
       <nav className="header-nav">
-        <NavLink to="/" end>
+        <NavLink to="/dashboard" end>
           Dashboard
         </NavLink>
-        <NavLink to="/users">Users</NavLink>
+        <NavLink to="/dashboard/users">Users</NavLink>
       </nav>
 
       <input type="checkbox" id="menu-toggle" />
@@ -20,7 +48,9 @@ const Header = () => {
         <span></span>
       </label>
 
-      <button className="logout-btn">Logout</button>
+      <button className="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
     </header>
   );
 };
