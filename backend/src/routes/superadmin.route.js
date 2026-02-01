@@ -1,5 +1,8 @@
 import { Router } from "express";
 import {
+  addNewAdmin,
+  adminSignupViaLink,
+  getAllUsers,
   getCurrentSuperAdmin,
   superadminLogin,
   superadminLogout,
@@ -11,6 +14,14 @@ const router = Router();
 router.route("/login").post(superadminLogin);
 router.route("/logout").post(verifySuperAdmin, superadminLogout);
 
+// to add new admin
+router.route("/add-admin").post(verifySuperAdmin, addNewAdmin);
+
+// to create new admin via link by admin
+router.route("/admin-signup").post(verifySuperAdmin, adminSignupViaLink);
+
 router.get("/current-superadmin", verifySuperAdmin, getCurrentSuperAdmin);
+
+router.get("/all-users", verifySuperAdmin, getAllUsers);
 
 export default router;

@@ -3,11 +3,18 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // making useSchema which includes the fields that we are taking from frontend forms or data
+// required field is made optional because
+// we havent provided name, username.. fields while sending invitation from superadminLogin
+// and only requires while admin updates from update link
+
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: function () {
+        // required only if user is not invited
+        return this.status !== "invited";
+      },
     },
     email: {
       type: String,
@@ -17,46 +24,44 @@ const userSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: true,
+      required: function () {
+        return this.status !== "invited";
+      },
       index: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: function () {
+        return this.status !== "invited";
+      },
       select: false,
     },
-
     role: {
       type: String,
       enum: ["user", "admin", "superadmin"],
       default: "user",
       index: true,
     },
-
     status: {
       type: String,
       enum: ["active", "invited", "disabled"],
       default: "active",
       index: true,
     },
-
     refreshToken: {
       type: String,
       select: false,
     },
-
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
     },
-
     invitedAt: {
       type: Date,
       default: null,
     },
-
     lastLoginAt: {
       type: Date,
       default: null,

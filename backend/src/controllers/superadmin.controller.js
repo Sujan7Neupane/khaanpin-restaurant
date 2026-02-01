@@ -3,6 +3,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.models.js";
 
 const superadminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -77,4 +78,116 @@ const getCurrentSuperAdmin = asyncHandler(async (req, res) => {
     );
 });
 
-export { superadminLogin, superadminLogout, getCurrentSuperAdmin };
+// To add new admin by the superadmin
+const addNewAdmin = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  // 1️. Check if user exists
+  const existing = await User.findOne({ email });
+  if (existing) {
+    throw new ApiError(400, "Admin with this email already exists.");
+  }
+
+  // 2️. Create admin with no password
+  // Later will be sent a link to change password
+  const newAdmin = await User.create({
+    email: email.toLowerCase().trim(),
+    role: "admin",
+    status: "invited",
+  });
+
+  // 3️. Generate invite token (JWT)
+  const token = jwt.sign(
+    { id: newAdmin._id, email: newAdmin.email, role: "admin" },
+    process.env.JWT_INVITE_SECRET,
+    { expiresIn: "24h" }
+  );
+
+  // 4️. Return link or send email
+  // invite link for testing only from POSTMAN
+  const inviteLink = `${process.env.CORS_ORIGIN}/set-password?token=${token}`;
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        201,
+        { inviteLink, email: newAdmin.email },
+        "Admin created. Invitation link sent. Please check your email."
+      )
+    );
+});
+
+// To update the Admin information from the invitation link
+const adminSignupViaLink = asyncHandler(async (req, res) => {
+  const { token, name, password } = req.body;
+
+  if (!token || !password || !name) {
+    throw new ApiError(400, "Token, name, and password are required");
+  }
+
+  // 1️. Verify token
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_INVITE_SECRET);
+  } catch (err) {
+    throw new ApiError(401, "Invalid or expired invitation token");
+  }
+
+  const { email, role } = decoded;
+
+  if (role !== "admin") {
+    throw new ApiError(403, "Invalid role in invite token");
+  }
+
+  // 2️. Check if user already exists
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ApiError(
+      400,
+      "User already registered. Invite link cannot be used."
+    );
+  }
+
+  // 3️. Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // 4️. Create the admin user
+  const newAdmin = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    role: "admin",
+    status: "active",
+  });
+
+  // 5️. Return success response
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        201,
+        { email: newAdmin.email, role: newAdmin.role, name: newAdmin.name },
+        "Admin account created successfully"
+      )
+    );
+});
+
+// Get all the users information in Super admin
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({ role: { $ne: "superadmin" } }).select(
+    "_id name username email role status createdAt invitedAt lastLoginAt"
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, users, "All users fetched successfully"));
+});
+
+export {
+  superadminLogin,
+  superadminLogout,
+  getCurrentSuperAdmin,
+  addNewAdmin,
+  adminSignupViaLink,
+  getAllUsers,
+};
