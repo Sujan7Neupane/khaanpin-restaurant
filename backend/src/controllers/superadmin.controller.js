@@ -4,6 +4,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.models.js";
+import { generateAdminInviteEmail, sendEmail } from "../utils/sendEmail.js";
 
 const superadminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -78,18 +79,17 @@ const getCurrentSuperAdmin = asyncHandler(async (req, res) => {
     );
 });
 
-// To add new admin by the superadmin
+// Controller to add a new admin and send invitation email
 const addNewAdmin = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
-  // 1️. Check if user exists
+  // 1️. Check if user already exists
   const existing = await User.findOne({ email });
   if (existing) {
-    throw new ApiError(400, "Admin with this email already exists.");
+    throw new ApiResponse(400, null, "Admin with this email already exists.");
   }
 
-  // 2️. Create admin with no password
-  // Later will be sent a link to change password
+  // 2️. Create new admin with no password
   const newAdmin = await User.create({
     email: email.toLowerCase().trim(),
     role: "admin",
@@ -103,16 +103,26 @@ const addNewAdmin = asyncHandler(async (req, res) => {
     { expiresIn: "24h" }
   );
 
-  // 4️. Return link or send email
-  // invite link for testing only from POSTMAN
+  // 4️. Build invite link
   const inviteLink = `${process.env.CORS_ORIGIN}/set-password?token=${token}`;
+
+  // 5️. Send invitation email
+  const html = generateAdminInviteEmail(inviteLink);
+
+  await sendEmail({
+    to: newAdmin.email,
+    subject: "Admin Invitation from Khaanpin",
+    html,
+  });
+
+  // 6️. Respond to frontend
   return res
     .status(201)
     .json(
       new ApiResponse(
         201,
-        { inviteLink, email: newAdmin.email },
-        "Admin created. Invitation link sent. Please check your email."
+        { email: newAdmin.email },
+        "Admin created. Invitation email sent successfully."
       )
     );
 });
