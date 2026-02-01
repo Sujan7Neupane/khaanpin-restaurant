@@ -1,8 +1,48 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import AddNewAdmin from "../AddNewAdmin/AddNewAdmin";
 import "./Users.css";
 
+const backend_url = import.meta.env.VITE_BACKEND_URL;
+
 const Users = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Fetch all users
+  const fetchUsers = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await axios.get(
+        `${backend_url}/api/v1/superadmin/all-users`,
+        {
+          withCredentials: true,
+        },
+      );
+      setUsers(res.data.data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch users");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load users on mount
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // Refresh list after adding new admin
+  const handleModalClose = () => {
+    setShowModal(false);
+    fetchUsers();
+  };
+
   return (
     <>
       <Header />
@@ -10,32 +50,44 @@ const Users = () => {
       <main className="users-page">
         <div className="users-header">
           <h2>User Management</h2>
-          <button className="primary-btn">Add User</button>
+          <button className="primary-btn" onClick={() => setShowModal(true)}>
+            Add New Admin
+          </button>
         </div>
 
-        <div className="users-list">
-          <div className="user-row header">
-            <span>Name</span>
-            <span>Email</span>
-            <span>Role</span>
-            <span>Status</span>
-          </div>
+        {loading ? (
+          <p>Loading users...</p>
+        ) : error ? (
+          <p className="error-text">{error}</p>
+        ) : (
+          <div className="users-list">
+            <div className="user-row header">
+              <span className="name-col">Name</span>
+              <span className="email-col">Email</span>
+              <span className="username-col">Username</span>
+              <span className="role-col">Role</span>
+              <span className="status-col">Status</span>
+            </div>
 
-          <div className="user-row">
-            <span>John Doe</span>
-            <span>john@example.com</span>
-            <span>Admin</span>
-            <span className="status active">Active</span>
+            {users.map((user) => (
+              <div className={`user-row ${user.status || ""}`} key={user._id}>
+                <span data-label="Name">{user.name || "N/A"}</span>
+                <span data-label="Email">{user.email || "N/A"}</span>
+                <span data-label="Username">{user.username || "N/A"}</span>
+                <span data-label="Role">{user.role || "N/A"}</span>
+                <span
+                  data-label="Status"
+                  className={`status ${user.status || ""}`}
+                >
+                  {user.status || "N/A"}
+                </span>
+              </div>
+            ))}
           </div>
-
-          <div className="user-row">
-            <span>Jane Smith</span>
-            <span>jane@example.com</span>
-            <span>User</span>
-            <span className="status suspended">Suspended</span>
-          </div>
-        </div>
+        )}
       </main>
+
+      {showModal && <AddNewAdmin onClose={handleModalClose} />}
 
       <Footer />
     </>
