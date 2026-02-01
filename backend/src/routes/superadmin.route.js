@@ -18,7 +18,7 @@ router.route("/logout").post(verifySuperAdmin, superadminLogout);
 router.route("/add-admin").post(verifySuperAdmin, addNewAdmin);
 
 // to create new admin via link by admin
-router.route("/admin-signup").post(verifySuperAdmin, adminSignupViaLink);
+router.route("/admin-signup").post(adminSignupViaLink);
 
 router.get("/current-superadmin", verifySuperAdmin, getCurrentSuperAdmin);
 

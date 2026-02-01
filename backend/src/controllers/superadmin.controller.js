@@ -38,14 +38,14 @@ const superadminLogin = asyncHandler(async (req, res) => {
   };
 
   const accessToken = jwt.sign(payload, process.env.JWT_ADMIN_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "1d",
   });
 
   res.cookie("superadminAccessToken", accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "Strict",
-    maxAge: 15 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
   return res
@@ -104,7 +104,7 @@ const addNewAdmin = asyncHandler(async (req, res) => {
   );
 
   // 4️. Build invite link
-  const inviteLink = `${process.env.CORS_ORIGIN}/set-password?token=${token}`;
+  const inviteLink = `${process.env.CORS_ORIGIN}/update-admin-info?token=${token}`;
 
   // 5️. Send invitation email
   const html = generateAdminInviteEmail(inviteLink);
@@ -135,7 +135,7 @@ const adminSignupViaLink = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Token, name, and password are required");
   }
 
-  // 1️. Verify token
+  // Verify token
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.JWT_INVITE_SECRET);
@@ -149,19 +149,36 @@ const adminSignupViaLink = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Invalid role in invite token");
   }
 
-  // 2️. Check if user already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    throw new ApiError(
-      400,
-      "User already registered. Invite link cannot be used."
-    );
-  }
-
-  // 3️. Hash the password
+  // Hash the password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // 4️. Create the admin user
+  // Check if user exists
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    // User exists → update name and password = no collision
+    existingUser.name = name;
+    existingUser.password = hashedPassword;
+    existingUser.status = "active";
+
+    if (!existingUser.username) {
+      existingUser.username = name.replace(/\s+/g, "").toLowerCase();
+    }
+
+    await existingUser.save();
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { email: existingUser.email, role: existingUser.role, name },
+          "Admin info updated successfully"
+        )
+      );
+  }
+
+  // User does not exist → create new admin
   const newAdmin = await User.create({
     name,
     email,
@@ -170,7 +187,6 @@ const adminSignupViaLink = asyncHandler(async (req, res) => {
     status: "active",
   });
 
-  // 5️. Return success response
   return res
     .status(201)
     .json(
