@@ -22,7 +22,7 @@ const AddNewAdmin = ({ onClose }) => {
         { withCredentials: true },
       );
 
-      toast.success("New Invitation sent successfully!");
+      toast.success("Admin Invitation sent successfully!");
       setEmail("");
       onClose();
     } catch (err) {

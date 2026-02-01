@@ -19,8 +19,6 @@ const Header = () => {
       );
 
       dispatch(logoutAction());
-
-      // 3️⃣ Redirect to login
       navigate("/", { replace: true });
     } catch (err) {
       console.error(
@@ -34,6 +32,9 @@ const Header = () => {
     <header className="admin-header">
       <h1 className="logo">SuperAdmin</h1>
 
+      {/* MUST be before nav */}
+      <input type="checkbox" id="menu-toggle" />
+
       <nav className="header-nav">
         <NavLink to="/dashboard" end>
           Dashboard
@@ -41,7 +42,6 @@ const Header = () => {
         <NavLink to="/dashboard/users">Users</NavLink>
       </nav>
 
-      <input type="checkbox" id="menu-toggle" />
       <label htmlFor="menu-toggle" className="menu-icon">
         <span></span>
         <span></span>
