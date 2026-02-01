@@ -19,6 +19,7 @@ import { SuperadminProtectedRoute } from "./components/SuperAdminProtectedRoutes
 import LoginProtectedRoute from "./components/LoginProtectedWrapper.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Users from "./pages/Users/Users.jsx";
+import UpdateAdminInfo from "./pages/UpdateAdminInfo/UpdateAdminInfo.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,15 @@ const router = createBrowserRouter([
           <Login />
         </>
       </LoginProtectedRoute>
+    ),
+  },
+  {
+    path: "/update-admin-info",
+    element: (
+      <>
+        <ToastContainer />
+        <UpdateAdminInfo />
+      </>
     ),
   },
   {
