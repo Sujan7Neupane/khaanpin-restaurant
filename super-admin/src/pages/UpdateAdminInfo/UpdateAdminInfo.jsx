@@ -45,8 +45,12 @@ const UpdateAdminInfo = () => {
         password,
       });
 
-      toast.success("Admin account created successfully");
-      navigate("/", { replace: true });
+      toast.success(
+        "Congratulations! Admin account created successfully. Please login to continue.",
+      );
+      setName("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (err) {
       toast.error(
         err.response?.data?.message || "Failed to create admin account",
