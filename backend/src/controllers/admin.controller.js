@@ -39,6 +39,10 @@ const adminLogin = asyncHandler(async (req, res) => {
     );
   }
 
+  if (adminUser.status === "disabled") {
+    throw new Error("Account is suspended. Please contact support.");
+  }
+
   // console.log(adminUser);
   // console.log(adminUser.role);
 

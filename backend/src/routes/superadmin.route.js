@@ -6,6 +6,7 @@ import {
   getCurrentSuperAdmin,
   superadminLogin,
   superadminLogout,
+  updateUserStatus,
 } from "../controllers/superadmin.controller.js";
 import { verifySuperAdmin } from "../middlewares/superadmin.middleware.js";
 
@@ -23,5 +24,8 @@ router.route("/admin-signup").post(adminSignupViaLink);
 router.get("/current-superadmin", verifySuperAdmin, getCurrentSuperAdmin);
 
 router.get("/all-users", verifySuperAdmin, getAllUsers);
+
+// to change the status of the admin from super admin like suspend admin
+router.put("/users/:id/status", verifySuperAdmin, updateUserStatus);
 
 export default router;

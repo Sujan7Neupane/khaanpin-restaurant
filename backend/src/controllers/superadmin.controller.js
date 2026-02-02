@@ -214,6 +214,40 @@ const getAllUsers = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, users, "All users fetched successfully"));
 });
 
+// To update the User status like suspending account
+const allowedStatuses = ["active", "invited", "disabled"]; // use the enum values
+
+const updateUserStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!allowedStatuses.includes(status)) {
+    throw new ApiError(
+      400,
+      `Invalid status. Allowed: ${allowedStatuses.join(", ")}`
+    );
+  }
+
+  const user = await User.findById(id);
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.status = status;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: `User status updated to ${status}`,
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      status: user.status,
+    },
+  });
+});
+
 export {
   superadminLogin,
   superadminLogout,
@@ -221,4 +255,5 @@ export {
   addNewAdmin,
   adminSignupViaLink,
   getAllUsers,
+  updateUserStatus,
 };
