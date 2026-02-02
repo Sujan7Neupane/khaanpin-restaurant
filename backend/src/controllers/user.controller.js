@@ -110,6 +110,10 @@ const userLogin = asyncHandler(async (req, res) => {
     throw new ApiError(404, "User does not exist");
   }
 
+  if (user.status === "suspended") {
+    throw new Error("Account is suspended. Please contact support.");
+  }
+
   // Very Important
   // Prevent admins logging in via user login
   if (user.role !== "user") {
