@@ -153,10 +153,18 @@ const adminSignupViaLink = asyncHandler(async (req, res) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
+    if (existingUser.invitationUsed) {
+      throw new ApiError(
+        400,
+        "Invitation link already used.\n Please Contact Superadmin to change password again."
+      );
+    }
     // User exists → update name and password = no collision
     existingUser.name = name;
     existingUser.password = password;
     existingUser.status = "active";
+    // making one time password change link -> no double change
+    existingUser.invitationUsed = true;
 
     if (!existingUser.username) {
       existingUser.username = name.replace(/\s+/g, "").toLowerCase();

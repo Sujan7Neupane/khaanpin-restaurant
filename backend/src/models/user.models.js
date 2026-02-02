@@ -66,6 +66,11 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    // for the single link for update password of admin
+    invitationUsed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
