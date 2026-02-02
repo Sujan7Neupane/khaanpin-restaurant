@@ -31,10 +31,10 @@ const AddMenu = () => {
         formData,
         {
           withCredentials: true,
-        }
+        },
       );
 
-      console.log(response);
+      // console.log(response);
 
       toast.success(response.data.message);
       setName("");

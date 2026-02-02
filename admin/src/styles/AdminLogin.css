@@ -96,6 +96,10 @@
   background: #1d4ed8;
 }
 
+.error {
+  color: red;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .login-wrapper {

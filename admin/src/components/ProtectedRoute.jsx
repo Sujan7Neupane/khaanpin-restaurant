@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
   const { isLoggedIn, loading } = useSelector((state) => state.admin);
 
   useEffect(() => {
-    console.log("ProtectedRoute mounted");
+    // console.log("ProtectedRoute mounted");
     if (!isLoggedIn && loading) {
       const loadCurrentAdmin = async () => {
         dispatch(setLoading(true));
@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
             `${backend_url}/api/v1/admin/current-admin`,
             {
               withCredentials: true,
-            }
+            },
           );
           console.log(res);
 
