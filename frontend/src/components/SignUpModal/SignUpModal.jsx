@@ -1,5 +1,3 @@
-// This modal will popup when user clicks on the signup button which is on the header
-
 import React, { useState } from "react";
 import "../SignUpModal/SignUpModal.css";
 import { toast } from "react-toastify";
@@ -10,19 +8,16 @@ import { setUser } from "../../store/authSlice";
 // setShowLogin -> passed from the parent component which will change the modal state
 const SignUpModal = ({ setShowLogin }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
-  // console.log(backend_url);
 
-  // for sending current state of logged in user to redux store
   const dispatch = useDispatch();
 
-  // this state identifies whether the user is signup or not
-  // Based on the state signup and login page is shown
+  // Toggle between Signup & Login
   const [isSignup, setIsSignup] = useState(true);
 
-  // for loading spinner on login signup button
+  // Loading spinner state
   const [loading, setLoading] = useState(false);
 
-  // state for form handling
+  // Form data
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -30,62 +25,54 @@ const SignUpModal = ({ setShowLogin }) => {
     password: "",
   });
 
-  // handling the input change and controlling input fields
+  // Handle input changes
   const onEventChangeHandler = (e) => {
-    const name = e.target.name; //this comes from the <input name="name"
-    const value = e.target.value;
-
-    setData((data) => ({ ...data, [name]: value }));
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // login handler
+  // Login / Signup handler
   const handleLoginSignup = async (e) => {
     e.preventDefault();
-
     if (loading) return;
+
+    setLoading(true);
 
     try {
       let response;
 
-      // for signup page
       if (isSignup) {
-        // api call
+        // Signup
         response = await axios.post(
           `${backend_url}/api/v1/user/register`,
-          // sending data to backend
           {
             name: data.name,
             username: data.username,
             email: data.email,
             password: data.password,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
       } else {
-        // for login page
+        // Login
         response = await axios.post(
-          // api call
           `${backend_url}/api/v1/user/login`,
-          // sending data to backend
           {
             email: data.email,
             password: data.password,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
       }
 
       if (response.data.success) {
-        // console.log(response);
-
-        // for current user -> when user loggs in display profile instead of signin button
+        // Fetch current user
         const currentUserRes = await axios.get(
           `${backend_url}/api/v1/user/current-user`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
-        // console.log(currentUserRes.data.data);
-        dispatch(setUser(currentUserRes.data.data));
 
+        dispatch(setUser(currentUserRes.data.data));
         toast.success(response.data.message || "Success");
         setShowLogin(false);
       }
@@ -95,89 +82,93 @@ const SignUpModal = ({ setShowLogin }) => {
         error?.response?.data?.error ||
         "Authentication failed";
       toast.error(message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // checking fields inside data in state just for checking
-  // whenever data changes this runs
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
   return (
-    <>
-      <div className="auth-overlay">
-        <div className="auth-modal">
-          {/* onClicking the close button form closes */}
-          <button className="auth-close" onClick={() => setShowLogin(false)}>
-            ×
+    <div className="auth-overlay">
+      <div className="auth-modal">
+        {/* Close modal */}
+        <button className="auth-close" onClick={() => setShowLogin(false)}>
+          ×
+        </button>
+
+        <h2>{isSignup ? "Create Account" : "Welcome Back"}</h2>
+
+        <form onSubmit={handleLoginSignup} className="auth-form">
+          {/* Name */}
+          {isSignup && (
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={data.name}
+              onChange={onEventChangeHandler}
+              required
+            />
+          )}
+
+          {/* Email */}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={data.email}
+            onChange={onEventChangeHandler}
+            required
+          />
+
+          {/* Username */}
+          {isSignup && (
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={data.username}
+              onChange={onEventChangeHandler}
+              required
+            />
+          )}
+
+          {/* Password */}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={data.password}
+            onChange={onEventChangeHandler}
+            required
+          />
+
+          {/* Submit Button */}
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="btn-spinner" />
+                <span>Processing...</span>
+              </>
+            ) : isSignup ? (
+              "Sign Up for Free"
+            ) : (
+              "Login"
+            )}
           </button>
-          {/* checks page and shows login and signup page accordingly  */}
-          <h2>{isSignup ? "Create Account" : "Welcome Back"}</h2>
+        </form>
 
-          <form onSubmit={handleLoginSignup} className="auth-form">
-            {/* hiding name on the login page  */}
-            {isSignup && (
-              <input
-                onChange={onEventChangeHandler}
-                value={data.name} //from useState variable
-                name="name"
-                type="text"
-                placeholder="Full Name"
-                required
-              />
-            )}
-
-            <input
-              // two way binding
-              onChange={onEventChangeHandler}
-              value={data.email}
-              // two way binding
-
-              name="email"
-              type="email"
-              placeholder="Email"
-              required
-            />
-
-            {isSignup && (
-              <input
-                onChange={onEventChangeHandler}
-                value={data.username}
-                name="username"
-                type="text"
-                placeholder="Username"
-                required
-              />
-            )}
-
-            <input
-              onChange={onEventChangeHandler}
-              value={data.password}
-              name="password"
-              type="password"
-              placeholder="Password"
-              required
-            />
-
-            <button type="submit" className="auth-btn" disabled={loading}>
-              {/* if page is signup shows signup and Login show Login text */}
-              {loading && <span className="btn-spinner" />}
-              {loading ? "Processing..." : "Login"}
-            </button>
-          </form>
-
-          <p className="auth-switch">
-            {isSignup ? "Already have an account?" : "Don’t have an account?"}
-            {/* Based on the page if login -> only email and password */}
-            {/* If register -> name, email and password field */}
-            <span onClick={() => setIsSignup(!isSignup)}>
-              {isSignup ? " Login" : " Sign Up"}
-            </span>
-          </p>
-        </div>
+        {/* Switch Login / Signup */}
+        <p className="auth-switch">
+          {isSignup ? "Already have an account?" : "Don’t have an account?"}
+          <span
+            onClick={() => !loading && setIsSignup(!isSignup)}
+            style={{ cursor: loading ? "not-allowed" : "pointer" }}
+          >
+            {isSignup ? " Login" : " Sign Up"}
+          </span>
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 
