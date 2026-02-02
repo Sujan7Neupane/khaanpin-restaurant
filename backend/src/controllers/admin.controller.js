@@ -2,51 +2,77 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.models.js";
+
+// To generate jwt tokens for login
+const generateTokens = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(500, "Error while generating Tokens!");
+  }
+};
 
 const adminLogin = asyncHandler(async (req, res) => {
-  // request from body
   const { email, password } = req.body;
 
-  const envEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase() || "";
-  const envPassword = process.env.ADMIN_PASSWORD?.trim() || "";
-
-  //   checks for email and password
   if (!email || !password) {
     throw new ApiError(400, "Email and password are required");
   }
 
-  // Since we dont have super admin
-  // we will be using the email and pass created manually
-  // TODO: future make super-admin
-  if (
-    email.trim().toLowerCase() !== envEmail ||
-    password.trim() !== envPassword
-  ) {
+  // Fetch admin user with password
+  const adminUser = await User.findOne({
+    email: email.trim().toLowerCase(),
+  }).select("+password");
+  if (!adminUser) {
+    throw new ApiError(
+      404,
+      "Admin user does not exist. Please contact superadmin!"
+    );
+  }
+
+  console.log(adminUser);
+  console.log(adminUser.role);
+
+  if (adminUser.role !== "admin") {
+    throw new ApiError(403, "Invalid login route");
+  }
+
+  const isPasswordValid = await adminUser.isPasswordCorrect(password);
+  if (!isPasswordValid) {
     throw new ApiError(401, "Invalid admin credentials");
   }
 
-  // Generate JWT token
-  const adminPayload = { email: envEmail, role: "admin" };
+  const { accessToken, refreshToken } = await generateTokens(adminUser._id);
 
-  const accessToken = jwt.sign(adminPayload, process.env.JWT_ADMIN_SECRET, {
-    expiresIn: "1d",
-  });
+  // Hide sensitive fields
+  const loggedInAdminUser = await User.findById(adminUser._id).select(
+    "-password -refreshToken"
+  );
 
-  // Cookie options
   const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "Strict",
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    maxAge: 1000 * 60 * 60 * 24,
   };
 
-  return res
+  res
     .status(200)
     .cookie("adminAccessToken", accessToken, cookieOptions)
+    .cookie("adminRefreshToken", refreshToken, cookieOptions)
     .json(
       new ApiResponse(
         200,
-        { email: envEmail, role: "admin" },
+        { adminUser: loggedInAdminUser },
         "Admin logged in successfully"
       )
     );

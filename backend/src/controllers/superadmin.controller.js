@@ -149,16 +149,13 @@ const adminSignupViaLink = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Invalid role in invite token");
   }
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   // Check if user exists
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
     // User exists → update name and password = no collision
     existingUser.name = name;
-    existingUser.password = hashedPassword;
+    existingUser.password = password;
     existingUser.status = "active";
 
     if (!existingUser.username) {

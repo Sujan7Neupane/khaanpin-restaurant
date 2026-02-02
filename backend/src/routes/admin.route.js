@@ -11,7 +11,7 @@ const router = Router();
 
 router.route("/login").post(adminLogin);
 
-router.route("/logout").post(verifyAdmin, adminLogout);
+router.route("/logout").post(adminLogout);
 
 router.get("/dashboard", verifyAdmin, adminDashboard);
 
