@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
               withCredentials: true,
             },
           );
-          console.log(res);
+          // console.log(res);
 
           dispatch(setAuthState({ isLoggedIn: true, user: res.data.data }));
         } catch {

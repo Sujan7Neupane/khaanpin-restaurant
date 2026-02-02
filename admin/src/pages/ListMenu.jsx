@@ -12,7 +12,7 @@ const ListMenu = () => {
     try {
       const response = await axios.get(`${backend_url}/api/v1/menu/list`);
 
-      console.log("Menu List", response);
+      // console.log("Menu List", response);
 
       if (response.data.success) {
         setDishList(response.data?.data || []);
@@ -20,7 +20,7 @@ const ListMenu = () => {
         toast.error("Failed to fetch menu");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       toast.error("Error fetching menu list");
     }
   };
