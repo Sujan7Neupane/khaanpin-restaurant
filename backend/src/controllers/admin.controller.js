@@ -85,6 +85,11 @@ const adminLogout = asyncHandler(async (_req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
     })
+    .clearCookie("adminRefreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    })
     .json(new ApiResponse(200, null, "Admin logged out successfully"));
 });
 
