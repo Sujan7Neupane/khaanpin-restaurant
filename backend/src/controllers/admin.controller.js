@@ -39,8 +39,8 @@ const adminLogin = asyncHandler(async (req, res) => {
     );
   }
 
-  console.log(adminUser);
-  console.log(adminUser.role);
+  // console.log(adminUser);
+  // console.log(adminUser.role);
 
   if (adminUser.role !== "admin") {
     throw new ApiError(403, "Invalid login route");
@@ -53,7 +53,6 @@ const adminLogin = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = await generateTokens(adminUser._id);
 
-  // Hide sensitive fields
   const loggedInAdminUser = await User.findById(adminUser._id).select(
     "-password -refreshToken"
   );

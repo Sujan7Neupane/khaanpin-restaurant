@@ -11,12 +11,16 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "No token provided");
   }
 
+  // console.log(adminToken);
+
   let decodedToken;
   try {
-    decodedToken = jwt.verify(adminToken, process.env.JWT_ADMIN_SECRET);
+    decodedToken = jwt.verify(adminToken, process.env.ACCESS_TOKEN_SECRET);
   } catch (err) {
     throw new ApiError(401, "Invalid or expired token");
   }
+
+  console.log("decodedToken", decodedToken);
 
   // Check role
   if (decodedToken.role !== "admin") {
