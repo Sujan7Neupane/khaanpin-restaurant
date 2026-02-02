@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { logout } from "../../store/authSlice";
 import { clearCart, selectTotalQuantity } from "../../store/cartSlice";
+import { HashLink } from "react-router-hash-link";
+
 /**
  * Header Component
  * ----------------
@@ -97,7 +99,7 @@ const Header = ({ setShowLogin }) => {
       await axios.post(
         `${backend_url}/api/v1/user/logout`,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
       dispatch(logout());
       dispatch(clearCart());
@@ -163,7 +165,9 @@ const Header = ({ setShowLogin }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/products">Products</NavLink>
+            <HashLink smooth to="/#menu">
+              Products
+            </HashLink>
           </li>
           <li>
             <NavLink to="/about">About</NavLink>

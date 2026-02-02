@@ -66,7 +66,7 @@ const Menu = ({ category, setCategory }) => {
     // console.log(name.toLowerCase() ? "all" : name);
 
     setCategory((prev) =>
-      prev === name.toLowerCase() ? "all" : name.toLowerCase()
+      prev === name.toLowerCase() ? "all" : name.toLowerCase(),
     );
   };
 
@@ -79,7 +79,7 @@ const Menu = ({ category, setCategory }) => {
   }
 
   return (
-    <div className="standard-padding container">
+    <div id="menu" className="standard-padding container">
       {/* Menu Header: Title & Description */}
       <div className="menu-header">
         <h2 className="menu-title">Our Menu</h2>
