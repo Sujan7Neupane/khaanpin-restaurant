@@ -104,7 +104,7 @@ const userLogin = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({
     $or: [{ username }, { email }],
-  });
+  }).select("+password");
 
   if (!user) {
     throw new ApiError(404, "User does not exist");
@@ -154,18 +154,15 @@ const userLogin = asyncHandler(async (req, res) => {
 const userLogout = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
-  if (!user || !user.refreshToken) {
-    return res
-      .status(400)
-      .json(new ApiResponse(200, "User Already Logged out!"));
+  if (user) {
+    user.refreshToken = undefined;
+    await user.save();
   }
-
-  user.refreshToken = undefined;
-  await user.save();
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: false,
+    sameSite: "Strict",
   };
 
   return res
