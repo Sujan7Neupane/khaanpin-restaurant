@@ -43,6 +43,26 @@ const Users = () => {
     fetchUsers();
   };
 
+  const handleStatusChange = async (userId, newStatus) => {
+    try {
+      await axios.put(
+        `${backend_url}/api/v1/superadmin/users/${userId}/status`,
+        {
+          status: newStatus,
+        },
+        { withCredentials: true },
+      );
+
+      setUsers((prevUsers) =>
+        prevUsers.map((u) =>
+          u._id === userId ? { ...u, status: newStatus } : u,
+        ),
+      );
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -70,16 +90,25 @@ const Users = () => {
             </div>
 
             {users.map((user) => (
-              <div className={`user-row ${user.status || ""}`} key={user._id}>
+              <div className="user-row" key={user._id}>
                 <span data-label="Name">{user.name || "N/A"}</span>
                 <span data-label="Email">{user.email || "N/A"}</span>
                 <span data-label="Username">{user.username || "N/A"}</span>
                 <span data-label="Role">{user.role || "N/A"}</span>
-                <span
-                  data-label="Status"
-                  className={`status ${user.status || ""}`}
-                >
-                  {user.status || "N/A"}
+
+                {/* Status select dropdown */}
+                <span data-label="Status" className="status">
+                  <select
+                    value={user.status || "active"}
+                    onChange={(e) =>
+                      handleStatusChange(user._id, e.target.value)
+                    }
+                    className={`status-select ${user.status || ""}`}
+                  >
+                    <option value="active">Active</option>
+                    <option value="invited">Invited</option>
+                    <option value="disabled">Disabled</option>
+                  </select>
                 </span>
               </div>
             ))}
